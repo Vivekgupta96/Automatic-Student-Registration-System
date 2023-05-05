@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import com.Project.Student.Main_User.Administrator;
 
-public class Main {
+public class App {
 
 	/* step-2.2, dashbord for student */
 	private static void studentdashboard(Scanner sc) {

@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 public class EMUtils {
+	
 	static EntityManagerFactory emf;
 	
 	static {
@@ -12,7 +13,8 @@ public class EMUtils {
 		emf = Persistence.createEntityManagerFactory("Project-Connect");
 	}
 
-	public static EntityManager getConnection() {
+	 public static EntityManager getConnection() {
+		
 		return emf.createEntityManager();
 
 	}
