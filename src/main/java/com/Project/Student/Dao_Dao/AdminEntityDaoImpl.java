@@ -1,6 +1,7 @@
 package com.Project.Student.Dao_Dao;
 
 import com.Project.Student.Dao_beam.AdminEntity;
+import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
@@ -156,4 +157,77 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 		return status;
 	}
 
+	@Override
+	public CourseEntity adminCourseSerch(int courseId) throws SomeThingWrongException, NoRecordFoundException {
+		EntityManager em = EMUtils.getConnection();
+		CourseEntity  res=null;
+
+		try {
+			CourseEntity cs = em.find(CourseEntity.class, courseId);
+			if (cs != null) {
+				res=cs;
+			} else {
+				throw new NoRecordFoundException("Course does Not Exits!");
+			}
+
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+
+			em.close();
+		}
+		return res;
+	}
+
+	
+	
+	//batch portion stated;
+	@Override
+	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
+		boolean batchAdd=false;
+		EntityManager em = EMUtils.getConnection();
+		em.getTransaction().begin();
+		try {
+			em.persist(bt);
+			batchAdd = true;
+
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+
+			em.getTransaction().commit();
+			em.close();
+		}
+		return batchAdd;
+		
+	}
+
+	@Override
+	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
+		BatcheEntity res=null;
+		EntityManager em = EMUtils.getConnection();
+
+		try {
+			em.getTransaction().begin();
+			BatcheEntity cs = em.find(BatcheEntity.class, batchId);
+			if (cs != null) {
+
+				cs.setSeat(seat);
+				em.persist(cs);
+				em.getTransaction().commit();
+				res=cs;
+			} else {
+				throw new NoRecordFoundException("Course does Not Exits!");
+			}
+
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+
+			em.close();
+		}
+		return res;
+	}
+
+	
 }
