@@ -2,7 +2,6 @@ package com.Project.StudentRegistration;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import com.Project.Student.Main_User.Administrator;
 
 public class Main {
@@ -62,15 +61,15 @@ public class Main {
 		System.out.println("Select -> 4: Delete Course");
 		System.out.println("Select -> 5: Search Course");
 
-		System.out.println("Select -> 8: Create Batch");
-		System.out.println("Select -> 9: update  Detail of batch");
-		System.out.println("Select -> 10: update Seat in batch");
+		System.out.println("Select -> 6: Create Batch");
+		System.out.println("Select -> 7: update  Detail of batch");
+		System.out.println("Select -> 8: update Seat in batch");
 
 //		6. Search for information about batches (by batch name, by start date range, by end
 //		date
 //		range, by start and end date. By course name of the batch)
-		System.out.println("Select -> 7: Search Student by Detail");
-		System.out.println("Select -> 6: View List Of  Student in Batch");
+		System.out.println("Select -> #: Search Student by Detail");
+		System.out.println("Select -> #: View List Of  Student in Batch");
 		System.out.println("\n\n");
 
 		System.out.println("Select -> 0: Exit from System");
@@ -93,20 +92,37 @@ public class Main {
 		case 3:
 			admMenu.viewAllCourse();
 			administrationActivity(sc);
-
 			break;
 		case 4:
 			admMenu.deleteCourse(sc);
 			administrationActivity(sc);
-			
 			break;
 		case 5:
-			admMenu.viewAllCourse();
+			admMenu.SearchCourse(sc);
 			administrationActivity(sc);
+			break;
 			
+		case 6:
+			admMenu.CreateBatch(sc);
+			administrationActivity(sc);
+			break;
+		case 7: admMenu.updateBatchDetail(sc);
+			administrationActivity(sc);
+			break;
+		case 8:
+			
+			//administrationActivity(sc);
+			break;
+		case 9:
+		
+			//administrationActivity(sc);
+			break;
+		case 10:
+			
+			//administrationActivity(sc);
 			break;
 
-		case 6:
+		case 0:
 			System.out.println("Thanks you Visit Again");
 			break;
 
@@ -118,6 +134,7 @@ public class Main {
 		}
 	}
 
+	
 	/* step-2.1, dashbord for admin */
 	private static void admindashboard(Scanner sc) {
 		int adminChoice = 0;

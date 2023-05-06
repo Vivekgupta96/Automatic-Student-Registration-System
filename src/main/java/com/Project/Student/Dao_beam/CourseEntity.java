@@ -97,4 +97,7 @@ public class CourseEntity {
 				+ ", description=" + description + ", fee=" + fee + ", courseInstructor=" + courseInstructor + "]";
 	}
 
+	
+
+	
 }
