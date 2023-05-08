@@ -8,32 +8,33 @@ import jakarta.persistence.Id;
 
 @Entity
 public class BatcheEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="batch_id")
+	@Column(name = "batch_id")
 	private int batchId;
-	
-	@Column(name="Batch_name" ,nullable=false,length=25,unique=true)
-	private  String bartchName;
-	
-	@Column(name="total_seat",nullable=false,length=10)
+
+	@Column(name = "Batch_name", nullable = false, length = 25, unique = true)
+	private String bartchName;
+
+	@Column(name = "total_seat", nullable = false, length = 10)
 	private int seat;
-	
-	@Column(name="batch_duration",nullable=false)
-	private int batchDuration;
 
+	@Column(name="studentId")
+	private int studentId;
+
+	@Column(name="courseId")
 	private int couresId;
-
+	
 	public BatcheEntity() {
 		super();
 	}
 
-	public BatcheEntity( String bartchName, int seat, int batchDuration, int couresId) {
+	public BatcheEntity(String bartchName, int seat, int studentId, int couresId) {
 		super();
 		this.bartchName = bartchName;
 		this.seat = seat;
-		this.batchDuration = batchDuration;
+		this.studentId = studentId;
 		this.couresId = couresId;
 	}
 
@@ -61,12 +62,12 @@ public class BatcheEntity {
 		this.seat = seat;
 	}
 
-	public int getBatchDuration() {
-		return batchDuration;
+	public int getStudentId() {
+		return studentId;
 	}
 
-	public void setBatchDuration(int batchDuration) {
-		this.batchDuration = batchDuration;
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
 	}
 
 	public int getCouresId() {
@@ -79,10 +80,8 @@ public class BatcheEntity {
 
 	@Override
 	public String toString() {
-		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", batchDuration="
-				+ batchDuration + ", couresId=" + couresId + "]";
+		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", studentId="
+				+ studentId + ", couresId=" + couresId + "]";
 	}
-
 	
-
 }

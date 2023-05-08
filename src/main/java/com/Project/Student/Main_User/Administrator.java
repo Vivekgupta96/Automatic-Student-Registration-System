@@ -243,21 +243,21 @@ public class Administrator {
 
 		try {
 			System.out.println("Enter the New batch name");
-			String bname=sc.nextLine();
+			String bname=sc.next();
 			
-			System.out.println("Enter Totol No Of Seat");
+			System.out.println("Enter Totol No of  Seat");
 			int seatCount=sc.nextInt();
-			
-			System.out.println("Enter the Batch duration");
-			int batchDuration=sc.nextInt();
 			
 			System.out.println("Enter course Id");
 			int courseId=sc.nextInt();
+			
+			System.out.println("Enter Student Id");
+			int studentId=sc.nextInt();
 					
 			bt.setBartchName(bname);
 			bt.setSeat(seatCount);
-			bt.setBatchDuration(batchDuration);
 			bt.setCouresId(courseId);
+			bt.setStudentId(studentId);
 			
 			
 		} catch (InputMismatchException e) {
@@ -285,7 +285,6 @@ public class Administrator {
 		
 		
 	}
-	
 	
 
 	public void updateBatchDetail(Scanner sc) {

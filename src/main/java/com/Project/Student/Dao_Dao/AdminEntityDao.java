@@ -10,10 +10,23 @@ import com.Project.Student.Exception.SomeThingWrongException;
 
 public interface AdminEntityDao {
 
+	/**
+	 * 
+	 * @param admin
+	 * @return
+	 * @throws SomeThingWrongException
+	 */
 	boolean addAdminToDb(AdminEntity admin) throws SomeThingWrongException;
 
 	String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException;
 
+	
+	/**
+	 * for the admin activity
+	 * @param cs
+	 * @return
+	 * @throws SomeThingWrongException
+	 */
 	boolean admiNewCourseAdd(CourseEntity cs) throws SomeThingWrongException;
 
 	CourseEntity admiCourseUpdate(double cFee, int courseId) throws SomeThingWrongException, NoRecordFoundException;
