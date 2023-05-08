@@ -58,9 +58,7 @@ public class StudentMenu {
 	}
 
 	public boolean LoginStudent(Scanner sc) {
-//		
-		
-		
+
 		boolean message = false;
 		System.out.println("Welcome TO student Login ,Please Fill Requred Details");
 		System.out.println("Enter your UserName");
@@ -75,7 +73,6 @@ public class StudentMenu {
 		try {
 
 			String status = stEtdao.studentAuthToDb(userId, pass);		
-			
 			
 			System.out.println("Welcome : " +status);
 			message = true;

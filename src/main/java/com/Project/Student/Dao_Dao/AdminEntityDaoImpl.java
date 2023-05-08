@@ -197,7 +197,6 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 	}
 
 	
-	
 	//batch portion stated;
 	@Override
 	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
@@ -249,5 +248,8 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 		return res;
 	}
 
+	
+	
+	
 	
 }

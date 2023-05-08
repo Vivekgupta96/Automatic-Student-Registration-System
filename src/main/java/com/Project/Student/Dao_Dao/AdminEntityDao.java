@@ -42,4 +42,6 @@ public interface AdminEntityDao {
 	BatcheEntity admiBatchUpdate(int seat, int batchId)throws SomeThingWrongException, NoRecordFoundException;
 
 	
+
+	
 }

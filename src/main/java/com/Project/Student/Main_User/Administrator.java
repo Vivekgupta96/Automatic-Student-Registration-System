@@ -12,11 +12,8 @@ import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 import com.Project.Student.Service.AutoGenerateAdminUserID;
+import com.Project.StudentRegistration.Main;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 public class Administrator {
 
@@ -237,36 +234,22 @@ public class Administrator {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void CreateBatch(Scanner sc) {
-		BatcheEntity bt=new  BatcheEntity();
-
-		try {
-			System.out.println("Enter the New batch name");
-			String bname=sc.next();
-			
-			System.out.println("Enter Totol No of  Seat");
-			int seatCount=sc.nextInt();
-			
-			System.out.println("Enter course Id");
-			int courseId=sc.nextInt();
-			
-			System.out.println("Enter Student Id");
-			int studentId=sc.nextInt();
-					
-			bt.setBartchName(bname);
-			bt.setSeat(seatCount);
-			bt.setCouresId(courseId);
-			bt.setStudentId(studentId);
-			
-			
-		} catch (InputMismatchException e) {
-			System.out.println("Invalid Input Entry!Please Select the from Given Input");
-			System.out.println("------------------------------------------------------");
-			CreateBatch(sc);
-		}
 		
+		System.out.println("enter the Batch details");
+		String bname = sc.next();
+		System.out.println("Enter the Course ID of the batch : ");
+		int cid =sc.nextInt();
 		
+		System.out.println("Enter the No  of the seat in batch : ");
+		int noOfSeat = sc.nextInt();
+		
+		BatcheEntity bt=new BatcheEntity();	
+		bt.setBartchName(bname);
+		bt.setSeat(noOfSeat);
+		bt.setCouresId(cid);
+			
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
 
 		boolean  res;
@@ -282,11 +265,8 @@ public class Administrator {
 			} catch (SomeThingWrongException e) {
 				e.printStackTrace();
 			}
-		
-		
 	}
 	
-
 	public void updateBatchDetail(Scanner sc) {
 		System.out.println("Enter Batch Id");
 		int batchId = sc.nextInt();
@@ -294,7 +274,6 @@ public class Administrator {
 		int seat = sc.nextInt();
 
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		try {
 			BatcheEntity res;
 			try {
@@ -316,8 +295,9 @@ public class Administrator {
 
 			e.printStackTrace();
 		}
-
-		
-	}	
-
+	}
+	
+	public void Logout() {
+		Main.dashboardMenu();	
+	}
 }

@@ -20,8 +20,6 @@ public class BatcheEntity {
 	@Column(name = "total_seat", nullable = false, length = 10)
 	private int seat;
 
-	@Column(name="studentId")
-	private int studentId;
 
 	@Column(name="courseId")
 	private int couresId;
@@ -30,11 +28,10 @@ public class BatcheEntity {
 		super();
 	}
 
-	public BatcheEntity(String bartchName, int seat, int studentId, int couresId) {
+	public BatcheEntity(String bartchName, int seat, int couresId) {
 		super();
 		this.bartchName = bartchName;
 		this.seat = seat;
-		this.studentId = studentId;
 		this.couresId = couresId;
 	}
 
@@ -62,14 +59,6 @@ public class BatcheEntity {
 		this.seat = seat;
 	}
 
-	public int getStudentId() {
-		return studentId;
-	}
-
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
-	}
-
 	public int getCouresId() {
 		return couresId;
 	}
@@ -80,8 +69,9 @@ public class BatcheEntity {
 
 	@Override
 	public String toString() {
-		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", studentId="
-				+ studentId + ", couresId=" + couresId + "]";
+		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", couresId="
+				+ couresId + "]";
 	}
+
 	
 }

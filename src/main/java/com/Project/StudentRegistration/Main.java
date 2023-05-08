@@ -140,18 +140,19 @@ public class Main {
 
 		System.out.println("Select -> 6: Create Batch");
 		System.out.println("Select -> 7: update Seat in batch");
-		System.out.println("Select -> 8: update  Detail of batch");
+    	System.out.println("Select -> 8: Search Student by Detail");
+		System.out.println("Select -> 9: Logout");
 
 //		6. Search for information about batches (by batch name, by start date range, by end
 //		date
 //		range, by start and end date. By course name of the batch)
 
-//		System.out.println("Select -> #: Search Student by Detail");
+
 //		System.out.println("Select -> #: View List Of  Student in Batch");
 		System.out.println("\n\n");
 
+		System.out.println("Select -> 99: previous Page");
 		System.out.println("Select -> 0: Exit from System");
-		System.out.println("Select -> 9: Exit from System");
 		System.out.println();
 		System.out.println("----------------------------------------");
 		System.out.println("Chose any Of the Option above");
@@ -190,11 +191,15 @@ public class Main {
 			administrationActivity(sc);
 			break;
 		case 8:
-
-			// administrationActivity(sc);
+			//admMenu.CreateBatch(sc);
+			
+			break;
+		case 9:
+			admMenu.Logout();
+			
 			break;
 
-		case 9:
+		case 99:
 			admindashboard(sc);
 			break;
 
