@@ -198,55 +198,55 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 
 	
 	//batch portion stated;
-	@Override
-	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
-		boolean batchAdd=false;
-		EntityManager em=null;
-		try {
-			em = EMUtils.getConnection();
-			em.getTransaction().begin();
-			em.persist(bt);
-			batchAdd = true;
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.getTransaction().commit();
-			em.close();
-		}
-		return batchAdd;
-		
-	}
+//	@Override
+//	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
+//		boolean batchAdd=false;
+//		EntityManager em=null;
+//		try {
+//			em = EMUtils.getConnection();
+//			em.getTransaction().begin();
+//			em.persist(bt);
+//			batchAdd = true;
+//
+//		} catch (PersistenceException px) {
+//			throw new SomeThingWrongException(px.getMessage());
+//		} finally {
+//
+//			em.getTransaction().commit();
+//			em.close();
+//		}
+//		return batchAdd;
+//		
+//	}
 
 	
-	@Override
-	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
-		BatcheEntity res=null;
-		EntityManager em=null;
-
-		try {
-			em = EMUtils.getConnection();
-			em.getTransaction().begin();
-			BatcheEntity cs = em.find(BatcheEntity.class, batchId);
-			if (cs != null) {
-
-				cs.setSeat(seat);
-				em.persist(cs);
-				em.getTransaction().commit();
-				res=cs;
-			} else {
-				throw new NoRecordFoundException("Course does Not Exits!");
-			}
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.close();
-		}
-		return res;
-	}
+	//@Override
+//	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
+//		BatcheEntity res=null;
+//		EntityManager em=null;
+//
+//		try {
+//			em = EMUtils.getConnection();
+//			em.getTransaction().begin();
+//			BatcheEntity cs = em.find(BatcheEntity.class, batchId);
+//			if (cs != null) {
+//
+//				cs.setSeat(seat);
+//				em.persist(cs);
+//				em.getTransaction().commit();
+//				res=cs;
+//			} else {
+//				throw new NoRecordFoundException("Course does Not Exits!");
+//			}
+//
+//		} catch (PersistenceException px) {
+//			throw new SomeThingWrongException(px.getMessage());
+//		} finally {
+//
+//			em.close();
+//		}
+//		return res;
+//	}
 
 	
 	

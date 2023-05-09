@@ -26,7 +26,7 @@ public class StudentMenu {
 
 		String genetuserid = AutoGenerateAdminUserID.StudentuserId();
 
-		Student s = new Student();
+		StudentEntity s = new StudentEntity();
 
 		s.setStName(studentName);
 		s.setStudentUserId(genetuserid);
@@ -46,6 +46,7 @@ public class StudentMenu {
 				System.out.println("Your Roll No : " + s.getRoll());
 				System.out.println("User Id: " + s.getStudentUserId());
 				System.out.println("Your PassWord: " + s.getPassword());
+				System.out.println("---------------------------------------------");
 			} else {
 				System.out.println("Error Occure");
 			}
@@ -65,21 +66,16 @@ public class StudentMenu {
 		String userId = sc.next();
 		System.out.println("Enter Your Password ");
 		String pass = sc.next();
-
+		
 		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
-
-		String name=null;
-		String Acstsus=null;
 		try {
-
-			String status = stEtdao.studentAuthToDb(userId, pass);		
 			
-			System.out.println("Welcome : " +status);
+		stEtdao.studentAuthToDb(userId, pass);		
+			
+			System.out.println("Welcome Student");
 			message = true;
-			
-
+		
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return message;
@@ -88,8 +84,8 @@ public class StudentMenu {
 
 	public void UpdatePassword(Scanner sc) {
 
-		System.out.println("Enter your userid");
-		String userId = sc.next();
+		System.out.println("Enter your Roll_Number");
+		int RollNo = sc.nextInt();
 		System.out.println("Enter your old Password");
 		String oldPass = sc.next();
 		System.out.println("Enter Your New  Password ");
@@ -99,7 +95,7 @@ public class StudentMenu {
 
 		try {
 
-			String status = stEtdao.studentUpdatePassword(userId,oldPass, pass);
+			String status = stEtdao.studentUpdatePassword(RollNo,oldPass, pass);
 
 			System.out.println("Mesage : " + status);
 
@@ -112,16 +108,20 @@ public class StudentMenu {
 
 	
 	public void UpdateEmail(Scanner sc) {
-		System.out.println("Enter your UserName");
-		String userId = sc.next();
+		
+		System.out.println("Enter your rollNo");
+		int rollno = sc.nextInt();
 		System.out.println("Enter Your New email ");
 		String newEmail = sc.next();
 
+		StudentEntity et=new StudentEntity();
+		et.setRoll(rollno);
+		et.setEmail(newEmail);
+		
 		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
-
 		try {
 
-			String status = stEtdao.studentEmailUpdate(userId, newEmail);
+			String status = stEtdao.studentEmailUpdate(et);
 
 			System.out.println("updated email : " + status);
 
@@ -164,14 +164,14 @@ public class StudentMenu {
 		System.out.println("You you sure To delete Your Account-->(Y/N)");
 		choice=sc.next().toLowerCase();
 		if(choice.equals("y")) {
-			System.out.println("Enter your UserName To de_activate");
-			String userId = sc.next();
+			System.out.println("Enter your RollNo To de_activate");
+			int userId = sc.nextInt();
 			
 			StudentEntityDao stEtdao = new StudentEntityDaoImpl();
 
 			try {
 
-				String status = stEtdao.deleteAccout(userId.toString());
+				String status = stEtdao.deleteAccout(userId);
 
 				System.out.println("Account Deleted : " + status);
 

@@ -183,11 +183,11 @@ public class Main {
 			break;
 
 		case 6:
-			admMenu.CreateBatch(sc);
+			//admMenu.CreateBatch(sc);
 			administrationActivity(sc);
 			break;
 		case 7:
-			admMenu.updateBatchDetail(sc);
+			//admMenu.updateBatchDetail(sc);
 			administrationActivity(sc);
 			break;
 		case 8:
@@ -220,13 +220,14 @@ public class Main {
 		int adminChoice = -1;
 		System.out.println("------------------------------------------------------");
 		System.out.println("              Administer Dashbroad                    ");
-		System.out.println("------------------------------------------------------");
+		System.out.println();
 		System.out.println("Select -> 1 for Register Admin");
 		System.out.println("Select -> 2 for Login Admin");
 		System.out.println("Select -> 3 for Back DashBoard");
 
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
+		System.out.println("------------------------------------------------------");
 		Administrator admMenu = new Administrator();
 		try {
 			adminChoice = sc.nextInt();
@@ -279,7 +280,7 @@ public class Main {
 		int dashboardChoice = 0;
 		System.out.println("------------------------------------------------------");
 		System.out.println("                  Dashbroad                           ");
-		System.out.println("------------------------------------------------------");
+		System.out.println();
 		System.out.println("Select-> 1 for Admin DashBoard ");
 		System.out.println("Select-> 2 for Student DashBoard");
 		System.out.println("Select-> 3 for Exit  ");

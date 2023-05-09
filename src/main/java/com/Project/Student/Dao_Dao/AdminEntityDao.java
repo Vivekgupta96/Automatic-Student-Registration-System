@@ -37,9 +37,9 @@ public interface AdminEntityDao {
 
 	CourseEntity adminCourseSerch(int courseId)throws SomeThingWrongException, NoRecordFoundException;
 
-	boolean adminAddBatch(BatcheEntity bt)throws SomeThingWrongException;
-
-	BatcheEntity admiBatchUpdate(int seat, int batchId)throws SomeThingWrongException, NoRecordFoundException;
+//	boolean adminAddBatch(BatcheEntity bt)throws SomeThingWrongException;
+//
+//	BatcheEntity admiBatchUpdate(int seat, int batchId)throws SomeThingWrongException, NoRecordFoundException;
 
 	
 

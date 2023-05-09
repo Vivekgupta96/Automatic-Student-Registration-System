@@ -1,10 +1,15 @@
 package com.Project.Student.Dao_beam;
 
+import java.util.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class BatcheEntity {
@@ -21,18 +26,24 @@ public class BatcheEntity {
 	private int seat;
 
 
-	@Column(name="courseId")
-	private int couresId;
-	
+	@OneToMany(mappedBy = "batch", fetch = FetchType.LAZY)
+	private Set<StudentEntity> students = new HashSet<>();
+
+	@ManyToMany
+	@JoinTable(name = "batch_course")
+	private Set<CourseEntity> courses = new HashSet<>();
+
 	public BatcheEntity() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public BatcheEntity(String bartchName, int seat, int couresId) {
+	public BatcheEntity(String bartchName, int seat, Set<StudentEntity> students, Set<CourseEntity> courses) {
 		super();
 		this.bartchName = bartchName;
 		this.seat = seat;
-		this.couresId = couresId;
+		this.students = students;
+		this.courses = courses;
 	}
 
 	public int getBatchId() {
@@ -59,19 +70,26 @@ public class BatcheEntity {
 		this.seat = seat;
 	}
 
-	public int getCouresId() {
-		return couresId;
+	public Set<StudentEntity> getStudents() {
+		return students;
 	}
 
-	public void setCouresId(int couresId) {
-		this.couresId = couresId;
+	public void setStudents(Set<StudentEntity> students) {
+		this.students = students;
+	}
+
+	public Set<CourseEntity> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<CourseEntity> courses) {
+		this.courses = courses;
 	}
 
 	@Override
 	public String toString() {
-		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", couresId="
-				+ couresId + "]";
+		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", students="
+				+ students + ", courses=" + courses + "]";
 	}
 
-	
 }

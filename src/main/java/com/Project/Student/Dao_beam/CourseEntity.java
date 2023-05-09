@@ -42,14 +42,12 @@ public class CourseEntity {
 
 	public CourseEntity() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-
-	public CourseEntity( String corseName, int duration, String description, double fee,
-			String courseInstructor, Set<StudentEntity> students) {
+	public CourseEntity(String corseName, int duration, String description, double fee, String courseInstructor,
+			Set<StudentEntity> students) {
 		super();
-		
 		this.corseName = corseName;
 		this.duration = duration;
 		this.description = description;
@@ -128,16 +126,6 @@ public class CourseEntity {
 		this.students = students;
 	}
 
-	public void addStudent(StudentEntity student) {
-        students.add(student);
-        student.getCourses().add(this);
-    }
-
-    public void removeStudent(StudentEntity student) {
-        students.remove(student);
-        student.getCourses().remove(this);
-    }
-
 
 	@Override
 	public String toString() {
@@ -147,7 +135,4 @@ public class CourseEntity {
 	}
 
 
-	
-
-	
 }
