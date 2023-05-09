@@ -24,6 +24,8 @@ public class Main {
 		System.out.println("Select -> 3 See all courses Avalable List");
 		System.out.println("Select -> 4 delete your Accout");
 		System.out.println("Select -> 5 Logout from System");
+		System.out.println("Select -> 7 Register For courses");
+		
 		System.out.println("Select -> 6  Back To Student Dashboard");
 		System.out.println("\n\n");
 		System.out.println("Select -> 0  Exit from system");
@@ -52,6 +54,9 @@ public class Main {
 			break;
 		case 5:
 			stmenu.Logout(sc);
+			break;
+		case 7:
+			stmenu.registerForCourses(sc);
 			break;
 
 		case 6:
@@ -105,7 +110,7 @@ public class Main {
 					studentdashboard(sc);
 				}
 				break;
-			case 3:
+			case 3:studentdashboard(sc);
 
 				break;
 
@@ -137,11 +142,15 @@ public class Main {
 		System.out.println("Select -> 3: view All Course");
 		System.out.println("Select -> 4: Delete Course");
 		System.out.println("Select -> 5: Search Course");
-
 		System.out.println("Select -> 6: Create Batch");
 		System.out.println("Select -> 7: update Seat in batch");
-    	System.out.println("Select -> 8: Search Student by Detail");
-		System.out.println("Select -> 9: Logout");
+    	System.out.println("Select -> 8: Add Couses To Batch");
+    	
+    	System.out.println("Select -> 9: Add Student To Batch");
+    	System.out.println("Select -> 11: Search student ");
+    	
+    	
+		System.out.println("Select -> 10: Logout");
 
 //		6. Search for information about batches (by batch name, by start date range, by end
 //		date
@@ -183,18 +192,29 @@ public class Main {
 			break;
 
 		case 6:
-			//admMenu.CreateBatch(sc);
+			admMenu.createBatch(sc);
 			administrationActivity(sc);
 			break;
 		case 7:
-			//admMenu.updateBatchDetail(sc);
+			admMenu.updateBatchDetail(sc);
 			administrationActivity(sc);
 			break;
 		case 8:
-			//admMenu.CreateBatch(sc);
+			admMenu.addCousesToBatch(sc);
+			administrationActivity(sc);
 			
 			break;
 		case 9:
+			admMenu.addStudentToBatch(sc);
+			administrationActivity(sc);
+			
+			break;
+		case 11:
+			admMenu.searchBatch(sc);
+			administrationActivity(sc);
+			
+			break;
+		case 10:
 			admMenu.Logout();
 			
 			break;
@@ -215,7 +235,7 @@ public class Main {
 		}
 	}
 
-	/* step-2.1, dashbord for admin */
+	
 	private static void admindashboard(Scanner sc) {
 		int adminChoice = -1;
 		System.out.println("------------------------------------------------------");
@@ -227,7 +247,6 @@ public class Main {
 
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
-		System.out.println("------------------------------------------------------");
 		Administrator admMenu = new Administrator();
 		try {
 			adminChoice = sc.nextInt();

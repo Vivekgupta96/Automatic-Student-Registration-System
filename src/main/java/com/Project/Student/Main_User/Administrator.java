@@ -1,7 +1,7 @@
 package com.Project.Student.Main_User;
 
 import java.util.InputMismatchException;
-import java.util.List;
+import java.util.*;
 import java.util.Scanner;
 
 import com.Project.Student.Dao_Dao.AdminEntityDao;
@@ -9,6 +9,7 @@ import com.Project.Student.Dao_Dao.AdminEntityDaoImpl;
 import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
+import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 import com.Project.Student.Service.AutoGenerateAdminUserID;
@@ -167,7 +168,7 @@ public class Administrator {
 		try {
 			List<CourseEntity> res;
 			try {
-				res = admEtdao.admiCourseUpdate();
+				res = admEtdao.admiViewAllCourse();
 				if (res != null) {
 					System.out.println("All Course Detail");
 					res.forEach(System.out::println);
@@ -237,69 +238,176 @@ public class Administrator {
 		}
 	}
 	
-//	public void CreateBatch(Scanner sc) {
-//		
-//		System.out.println("enter the Batch details");
-//		String bname = sc.next();
-//		System.out.println("Enter the Course ID of the batch : ");
-//		int cid =sc.nextInt();
-//		
-//		System.out.println("Enter the No  of the seat in batch : ");
-//		int noOfSeat = sc.nextInt();
-//		
-//		BatcheEntity bt=new BatcheEntity();	
-//		bt.setBartchName(bname);
-//		bt.setSeat(noOfSeat);
-//		bt.setCouresId(cid);
-//			
-//		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-//
-//		boolean  res;
-//			try {
-//				res = admEtdao.adminAddBatch(bt);
-//				if (res ) {
-//					System.out.println(bt);
-//
-//				} else {
-//					System.out.println("error Occured or corse Not Exist!");
-//				}
-//			
-//			} catch (SomeThingWrongException e) {
-//				e.printStackTrace();
-//			}
-//	}
-//	
-//	public void updateBatchDetail(Scanner sc) {
-//		System.out.println("Enter Batch Id");
-//		int batchId = sc.nextInt();
-//		System.out.println("Enter Batch Updated Seat");
-//		int seat = sc.nextInt();
-//
-//		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-//		try {
-//			BatcheEntity res;
-//			try {
-//				res = admEtdao.admiBatchUpdate(seat, batchId);
-//				if (res != null) {
-//					System.out.println("------------------------------------------------------");
-//					System.out.println("Batch Update Succesfully");
-//					System.out.println(res);
-//					System.out.println("------------------------------------------------------");
-//				} else {
-//					System.out.println("error Occured");
-//				}
-//			} catch (NoRecordFoundException e) {
-//
-//				e.printStackTrace();
-//			}
-//
-//		} catch (SomeThingWrongException e) {
-//
-//			e.printStackTrace();
-//		}
-//	}
-//	
 	public void Logout() {
 		Main.dashboardMenu();	
 	}
+	
+	public void createBatch(Scanner sc) {
+
+		System.out.println("enter the Batch details");
+		System.out.println("enter the Batch Name ");
+		String bname = sc.next();
+		System.out.println("Enter the No  of the seat in batch : ");
+		int noOfSeat = sc.nextInt();
+		BatcheEntity bt=new BatcheEntity();	
+		bt.setBartchName(bname);
+		bt.setSeat(noOfSeat);
+		
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+		boolean  res;
+			try {
+				res = admEtdao.adminAddBatch(bt);
+				if (res ) {
+					System.out.println(bt);
+
+				} else {
+					System.out.println("error Occured or corse Not Exist!");
+				}
+			
+			} catch (SomeThingWrongException e) {
+				e.printStackTrace();
+			}
+		
+	}
+	
+	public void updateBatchDetail(Scanner sc) {
+		
+		System.out.println("Enter Batch Id");
+		int batchId = sc.nextInt();
+		System.out.println("Enter Batch Updated Seat");
+		int seat = sc.nextInt();
+
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+		try {
+			BatcheEntity res;
+			try {
+				res = admEtdao.admiBatchUpdate(seat, batchId);
+				if (res != null) {
+					System.out.println("------------------------------------------------------");
+					System.out.println("Batch Update Succesfully");
+					System.out.println(res);
+					System.out.println("------------------------------------------------------");
+				} else {
+					System.out.println("error Occured");
+				}
+			} catch (NoRecordFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		} catch (SomeThingWrongException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+
+
+	public void addCousesToBatch(Scanner sc) {
+	    System.out.println("-----------Course Add to Batch-----------");
+		System.out.println("Enter Batch Id");
+		int bid = sc.nextInt();
+		System.out.println("Enter Course Id");
+		int courseId = sc.nextInt();
+
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+		try {
+			CourseEntity res;
+			try {
+				res = admEtdao.admiCourseToBatch(bid, courseId);
+				if (res != null) {
+					System.out.println("Course Update Succesfully");
+					System.out.println(res);
+				} else {
+					System.out.println("error Occured");
+				}
+			} catch (NoRecordFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		} catch (SomeThingWrongException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addStudentToBatch(Scanner sc) {
+		System.out.println("-----------Student Add to Batch-----------");
+		System.out.println("Enter Batch Id");
+		int bid = sc.nextInt();
+		System.out.println("Enter Student RollNo");
+		int courseId = sc.nextInt();
+
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+		try {
+			StudentEntity res;
+			try {
+				res = admEtdao.admiStudentToBatch(bid, courseId);
+				if (res != null) {
+					System.out.println("Student added Succesfully");
+					System.out.println(res);
+				} else {
+					System.out.println("error Occured");
+				}
+			} catch (NoRecordFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		} catch (SomeThingWrongException e) {
+
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	public void searchBatch(Scanner sc) {
+		System.out.println("-----------View Batch Detail-----------");
+		
+		System.out.println("Enter BatchId");
+		int batchid = sc.nextInt();
+
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+		try {
+			BatcheEntity res;
+			try {
+				res = admEtdao.searchBatch(batchid);
+				if (res != null) {
+					System.out.println("Student Detail batchwise");
+					System.out.println(res.getBartchName());
+					System.out.println(res.getSeat());
+					
+					Set<CourseEntity> cs=res.getCourses();
+					Set<StudentEntity> std=res.getStudents();
+					System.out.println("Total No of Student :"+std.size());
+					System.out.println("****Total No of courses*******");
+					System.out.println("Total No of Student :"+cs.size());
+					for(CourseEntity cc:cs) {
+						System.out.println("course name  : "+cc.getCorseName()+ "Instructer :"+cc.getCourseInstructor());
+					}
+				} else {
+					System.out.println("error Occured");
+				}
+			} catch (NoRecordFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		} catch (SomeThingWrongException e) {
+
+			e.printStackTrace();
+		}
+
+		
+	}
+
+
+	
 }

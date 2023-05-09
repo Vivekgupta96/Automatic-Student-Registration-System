@@ -21,6 +21,6 @@ public interface StudentEntityDao {
 
 	String deleteAccout(int roolNo)throws SomeThingWrongException,NoRecordFoundException;
 
-	
+	void registerCourses(int registerForCourses,int courseid)throws SomeThingWrongException,NoRecordFoundException;
 
 }

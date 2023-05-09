@@ -160,14 +160,11 @@ public class StudentEntity {
 		this.courses = courses;
 	}
 
-
 	@Override
 	public String toString() {
 		return "StudentEntity [roll=" + roll + ", stName=" + stName + ", email=" + email + ", address=" + address
 				+ ", studentUserId=" + studentUserId + ", password=" + password + ", isDeactivate=" + isDeactivate
-				+ ", batch=" + batch + ", courses=" + courses + "]";
+				+ "]";
 	}
-
-
 	
 }
