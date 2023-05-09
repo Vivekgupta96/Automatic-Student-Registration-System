@@ -1,4 +1,4 @@
-
+![Master](https://github.com/Vivekgupta96/rebel-snow-4871/blob/main/img.png)
 ## rebel-snow-4871
 # Project Details
 - This Project Is About the AUTOMATIC STUDENT REGISTRATIOIN SYSTEM where Students are enrolled in different courses under different
