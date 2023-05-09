@@ -26,7 +26,7 @@ public class BatcheEntity {
 	private int seat;
 
 
-	@OneToMany(mappedBy = "batch", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "batch", fetch = FetchType.EAGER)
 	private Set<StudentEntity> students = new HashSet<>();
 
 	@ManyToMany
@@ -84,12 +84,6 @@ public class BatcheEntity {
 
 	public void setCourses(Set<CourseEntity> courses) {
 		this.courses = courses;
-	}
-
-	@Override
-	public String toString() {
-		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", seat=" + seat + ", students="
-				+ students + ", courses=" + courses + "]";
 	}
 
 }

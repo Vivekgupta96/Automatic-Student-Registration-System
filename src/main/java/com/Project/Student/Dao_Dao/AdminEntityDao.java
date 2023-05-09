@@ -5,6 +5,7 @@ import java.util.List;
 import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
+import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 
@@ -21,25 +22,26 @@ public interface AdminEntityDao {
 	String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException;
 
 	
-	/**
-	 * for the admin activity
-	 * @param cs
-	 * @return
-	 * @throws SomeThingWrongException
-	 */
 	boolean admiNewCourseAdd(CourseEntity cs) throws SomeThingWrongException;
 
 	CourseEntity admiCourseUpdate(double cFee, int courseId) throws SomeThingWrongException, NoRecordFoundException;
 
-	List<CourseEntity> admiCourseUpdate()throws SomeThingWrongException, NoRecordFoundException;
+	List<CourseEntity> admiViewAllCourse()throws SomeThingWrongException, NoRecordFoundException;
 
 	boolean admiCourseDelete(int courseId)throws SomeThingWrongException, NoRecordFoundException;
 
 	CourseEntity adminCourseSerch(int courseId)throws SomeThingWrongException, NoRecordFoundException;
 
-//	boolean adminAddBatch(BatcheEntity bt)throws SomeThingWrongException;
-//
-//	BatcheEntity admiBatchUpdate(int seat, int batchId)throws SomeThingWrongException, NoRecordFoundException;
+	boolean adminAddBatch(BatcheEntity bt)throws SomeThingWrongException;
+
+	BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException;
+
+	CourseEntity admiCourseToBatch(int bid, int courseId)throws SomeThingWrongException, NoRecordFoundException;
+
+	StudentEntity admiStudentToBatch(int bid, int studentrollno)throws SomeThingWrongException, NoRecordFoundException;
+
+	BatcheEntity searchBatch(int Batchid)throws SomeThingWrongException, NoRecordFoundException;
+
 
 	
 

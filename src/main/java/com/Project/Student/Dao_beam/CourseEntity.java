@@ -32,7 +32,7 @@ public class CourseEntity {
 	@Column(name = "course_fee", nullable = false)
 	private double fee;
 
-	@Column(name = "course_instructer")
+	@Column(name = "course_instructer",nullable=false)
 	private String courseInstructor;
 	
 
@@ -44,9 +44,9 @@ public class CourseEntity {
 		super();
 		
 	}
-
 	public CourseEntity(String corseName, int duration, String description, double fee, String courseInstructor,
 			Set<StudentEntity> students) {
+		
 		super();
 		this.corseName = corseName;
 		this.duration = duration;

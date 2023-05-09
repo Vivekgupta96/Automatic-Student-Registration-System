@@ -189,5 +189,22 @@ public class StudentMenu {
 		Main.dashboardMenu();
 		
 	}
+
+	public void registerForCourses(Scanner sc) {
+		System.out.println("Please Fill Requred Details");
+		System.out.println("Enter Student rollNo ");
+		int studentid = sc.nextInt();
+		System.out.println("Enter courseid ");
+		int courseid = sc.nextInt();
+		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		 
+				try {
+					stEtdao.registerCourses(studentid,courseid);
+					System.out.println("course alloted succesfully");
+				
+				} catch (SomeThingWrongException |NoRecordFoundException e ) {
+					e.printStackTrace();
+				} 
+	}
 	
 }
