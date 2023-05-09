@@ -3,6 +3,7 @@ package com.Project.Student.Dao_Dao;
 import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
+import com.Project.Student.Dao_beam.LoggedInUserId;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 
@@ -40,20 +41,26 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 	public String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException {
 
 		String authadmin = null;
-
 		EntityManager em = EMUtils.getConnection();
 		try {
 
-			String adminAuth = "SELECT a.adminName FROM AdminEntity a WHERE a.adminUserId = :userId AND a.adminPassword = :password";
+			
+			String adminAuth = "SELECT a.adminUserId FROM AdminEntity a WHERE a.adminUserId = :userId AND a.adminPassword = :password";
 			Query qq = em.createQuery(adminAuth, AdminEntity.class);
 			qq.setParameter("userId", userId);
 			qq.setParameter("password", pass);
 
-			String adminName = (String) qq.getSingleResult();
-			authadmin = adminName;
+			List<String> list = (List<String>)qq.getResultList();
+			if(list.size() == 0) {
+			
+				throw new SomeThingWrongException("userId or Password Are Incorrect");		
+				}
+				LoggedInUserId.adminloggedInUserId = list.get(0);
+				authadmin=	list.get(0);
+			
 		} catch (PersistenceException px) {
 
-			throw new SomeThingWrongException(px.getMessage());
+			throw new SomeThingWrongException("Unable to process request, try again later");
 		} finally {
 
 			em.close();
@@ -62,18 +69,28 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 
 	}
 
+
 	@Override
-	public boolean admiNewCourseAdd(CourseEntity course) throws SomeThingWrongException {
+	public boolean admiNewCourseAdd(CourseEntity course) throws SomeThingWrongException {	
 		boolean status = false;
-		EntityManager em = EMUtils.getConnection();
-		em.getTransaction().begin();
+		EntityManager em=null;
 
 		try {
+			em = EMUtils.getConnection();
+			em.getTransaction().begin();
+			Query query = em.createQuery("SELECT count(c) FROM CourseEntity c WHERE c.corseName = :coursename");
+			query.setParameter("coursename", course.getCorseName());
+			if((Long)query.getSingleResult() > 0) {
+				//you are here means company with given name exists so throw exceptions
+				throw new SomeThingWrongException("course already exits:"+course.getCorseName());
+			}
+			
+			
 			em.persist(course);
 			status = true;
 
 		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
+			throw new SomeThingWrongException("Unable to process request, try again later");
 		} finally {
 
 			em.getTransaction().commit();
@@ -180,54 +197,59 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 	}
 
 	
-	
 	//batch portion stated;
-	@Override
-	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
-		boolean batchAdd=false;
-		EntityManager em = EMUtils.getConnection();
-		em.getTransaction().begin();
-		try {
-			em.persist(bt);
-			batchAdd = true;
+//	@Override
+//	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
+//		boolean batchAdd=false;
+//		EntityManager em=null;
+//		try {
+//			em = EMUtils.getConnection();
+//			em.getTransaction().begin();
+//			em.persist(bt);
+//			batchAdd = true;
+//
+//		} catch (PersistenceException px) {
+//			throw new SomeThingWrongException(px.getMessage());
+//		} finally {
+//
+//			em.getTransaction().commit();
+//			em.close();
+//		}
+//		return batchAdd;
+//		
+//	}
 
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
+	
+	//@Override
+//	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
+//		BatcheEntity res=null;
+//		EntityManager em=null;
+//
+//		try {
+//			em = EMUtils.getConnection();
+//			em.getTransaction().begin();
+//			BatcheEntity cs = em.find(BatcheEntity.class, batchId);
+//			if (cs != null) {
+//
+//				cs.setSeat(seat);
+//				em.persist(cs);
+//				em.getTransaction().commit();
+//				res=cs;
+//			} else {
+//				throw new NoRecordFoundException("Course does Not Exits!");
+//			}
+//
+//		} catch (PersistenceException px) {
+//			throw new SomeThingWrongException(px.getMessage());
+//		} finally {
+//
+//			em.close();
+//		}
+//		return res;
+//	}
 
-			em.getTransaction().commit();
-			em.close();
-		}
-		return batchAdd;
-		
-	}
-
-	@Override
-	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
-		BatcheEntity res=null;
-		EntityManager em = EMUtils.getConnection();
-
-		try {
-			em.getTransaction().begin();
-			BatcheEntity cs = em.find(BatcheEntity.class, batchId);
-			if (cs != null) {
-
-				cs.setSeat(seat);
-				em.persist(cs);
-				em.getTransaction().commit();
-				res=cs;
-			} else {
-				throw new NoRecordFoundException("Course does Not Exits!");
-			}
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.close();
-		}
-		return res;
-	}
-
+	
+	
+	
 	
 }
