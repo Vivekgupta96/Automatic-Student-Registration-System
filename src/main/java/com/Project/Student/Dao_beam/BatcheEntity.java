@@ -1,6 +1,8 @@
 package com.Project.Student.Dao_beam;
 
 import java.util.*;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,7 +28,7 @@ public class BatcheEntity {
 	private int seat;
 
 
-	@OneToMany(mappedBy = "batch", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "batch", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<StudentEntity> students = new HashSet<>();
 
 	@ManyToMany

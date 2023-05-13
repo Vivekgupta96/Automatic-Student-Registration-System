@@ -7,12 +7,6 @@ import com.Project.Student.Main_User.StudentMenu;
 
 public class Main {
 
-//	3. Can update personal details
-
-//	6. Can see all batches course-wise along with available seats.
-//	7. Register himself in a course and select any batch for himself from the list of
-//	upcoming batches for this course
-//	8. Logout his account
 
 	public static void studentAactivity(Scanner sc) {
 
@@ -25,6 +19,7 @@ public class Main {
 		System.out.println("Select -> 4 delete your Accout");
 		System.out.println("Select -> 5 Logout from System");
 		System.out.println("Select -> 7 Register For courses");
+		System.out.println("Select -> 8 See all enrolled Course");
 		
 		System.out.println("Select -> 6  Back To Student Dashboard");
 		System.out.println("\n\n");
@@ -57,6 +52,11 @@ public class Main {
 			break;
 		case 7:
 			stmenu.registerForCourses(sc);
+			studentAactivity(sc);
+			break;
+		case 8:
+			stmenu.SeeEnrollCourses(sc);
+			studentAactivity(sc);
 			break;
 
 		case 6:
@@ -80,7 +80,7 @@ public class Main {
 	private static void studentdashboard(Scanner sc) {
 		int studentChoice = 0;
 		System.out.println("------------------------------------------------------");
-		System.out.println("                 Student Dashbroad                      ");
+		System.out.println("                 Student Dashbroad                    ");
 		System.out.println("------------------------------------------------------");
 		System.out.println("Select -> 1 for Enrollment Student");
 		System.out.println("Select -> 2 for Login Student");

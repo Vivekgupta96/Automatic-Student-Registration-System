@@ -289,13 +289,16 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 
 		try {
 			em.getTransaction().begin();
-			StudentEntity cs = em.find(StudentEntity.class, studentrollno);
 			
+			StudentEntity cs = em.find(StudentEntity.class, studentrollno);
 			BatcheEntity bt=em.find(BatcheEntity.class, bid);
+			
 			if (cs != null&&bt!=null) {
 
 				bt.getStudents().add(cs);
+				cs.setBatch(bt);
 				em.persist(bt);
+				em.persist(cs);
 				em.getTransaction().commit();
 				status = cs;
 			} else {

@@ -1,6 +1,6 @@
 package com.Project.Student.Dao_Dao;
 
-import java.util.List;
+import java.util.*;
 
 import com.Project.Student.Dao_Eutil.EMUtils;
 import com.Project.Student.Dao_beam.CourseEntity;
@@ -186,23 +186,21 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 
 	@Override
 	public void registerCourses(int studentid, int courseid) throws SomeThingWrongException, NoRecordFoundException {
-		
+
 		EntityManager em = EMUtils.getConnection();
 		try {
 			em.getTransaction().begin();
-			StudentEntity se = em.find(StudentEntity.class,studentid );
-			CourseEntity ce = em.find(CourseEntity.class,courseid );
-			
-			if (ce != null &&se!=null) {
-				
-				CourseEntity ct=new CourseEntity();
-				StudentEntity st=new StudentEntity();
-				ct.getStudents().add(st);
-				st.getCourses().add(ct);
+			StudentEntity se = em.find(StudentEntity.class, studentid);
+			CourseEntity ce = em.find(CourseEntity.class, courseid);
+
+			if (ce != null && se != null) {
+
+				ce.getStudents().add(se);
+				se.getCourses().add(ce);
 				em.persist(ce);
 				em.persist(se);
 				em.getTransaction().commit();
-				
+
 			} else {
 				em.getTransaction().rollback();
 				throw new NoRecordFoundException("student does Not Exits!");
@@ -210,11 +208,44 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
-		}	
-		 finally {
+		} finally {
 			em.close();
 		}
+
+	}
+
+	@Override
+	public void StudentEnrollCourses(int studentRollNo) throws SomeThingWrongException, NoRecordFoundException {
+		EntityManager em = EMUtils.getConnection();
 		
+		
+		
+		try {
+			em.getTransaction().begin();
+
+			StudentEntity se = em.find(StudentEntity.class, studentRollNo);
+
+			if (se != null) {
+				
+				Set<CourseEntity>  res =(Set<CourseEntity>) se.getCourses();
+				
+				for(CourseEntity cc:res) {
+					
+					System.out.println(cc.getCorseName());
+					
+				}
+
+			} else {
+				em.getTransaction().rollback();
+				throw new NoRecordFoundException("student does Not Exits!");
+			}
+
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+			em.close();
+		}
+
 	}
 
 }

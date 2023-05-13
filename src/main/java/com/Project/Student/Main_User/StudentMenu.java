@@ -206,5 +206,22 @@ public class StudentMenu {
 					e.printStackTrace();
 				} 
 	}
+
+	public void SeeEnrollCourses(Scanner sc) {
+		System.out.println("Please Fill Requred Details");
+		System.out.println("Enter Student rollNo ");
+		
+		int StudentRollNo = sc.nextInt();
+		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		 
+				try {
+					stEtdao.StudentEnrollCourses(StudentRollNo);
+					System.out.println("course alloted succesfully");
+				
+				} catch (SomeThingWrongException |NoRecordFoundException e ) {
+					e.printStackTrace();
+				} 
+		
+	}
 	
 }

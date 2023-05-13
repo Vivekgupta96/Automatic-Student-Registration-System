@@ -302,8 +302,6 @@ public class Administrator {
 		}
 	}
 
-
-
 	public void addCousesToBatch(Scanner sc) {
 	    System.out.println("-----------Course Add to Batch-----------");
 		System.out.println("Enter Batch Id");
@@ -381,17 +379,10 @@ public class Administrator {
 				res = admEtdao.searchBatch(batchid);
 				if (res != null) {
 					System.out.println("Student Detail batchwise");
-					System.out.println(res.getBartchName());
-					System.out.println(res.getSeat());
+					System.out.println("BatchName  :"+res.getBartchName());
+					System.out.println("Total Seats   :"+res.getSeat());
+					System.out.println("Total Student :"+res.getStudents().size());
 					
-					Set<CourseEntity> cs=res.getCourses();
-					Set<StudentEntity> std=res.getStudents();
-					System.out.println("Total No of Student :"+std.size());
-					System.out.println("****Total No of courses*******");
-					System.out.println("Total No of Student :"+cs.size());
-					for(CourseEntity cc:cs) {
-						System.out.println("course name  : "+cc.getCorseName()+ "Instructer :"+cc.getCourseInstructor());
-					}
 				} else {
 					System.out.println("error Occured");
 				}

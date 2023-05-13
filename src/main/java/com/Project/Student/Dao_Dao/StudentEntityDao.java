@@ -23,4 +23,6 @@ public interface StudentEntityDao {
 
 	void registerCourses(int registerForCourses,int courseid)throws SomeThingWrongException,NoRecordFoundException;
 
+	void StudentEnrollCourses(int studentRollNo)throws SomeThingWrongException,NoRecordFoundException;
+
 }
