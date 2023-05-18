@@ -11,7 +11,7 @@ public class Main {
 	public static void studentAactivity(Scanner sc) {
 
 		System.out.println("------------------------------------------------------");
-		System.out.println("                 Hellow Student!                    ");
+		System.out.println("                 Hellow Student!                      ");
 		System.out.println("------------------------------------------------------");
 		System.out.println("Select -> 1 Update password ");
 		System.out.println("Select -> 2 Update email Id");
@@ -19,15 +19,16 @@ public class Main {
 		System.out.println("Select -> 4 delete your Accout");
 		System.out.println("Select -> 5 Logout from System");
 		System.out.println("Select -> 7 Register For courses");
-		System.out.println("Select -> 8 See all enrolled Course");
+		System.out.println("Select -> 8 See all Enrolled Course");
 		
 		System.out.println("Select -> 6  Back To Student Dashboard");
 		System.out.println("\n\n");
 		System.out.println("Select -> 0  Exit from system");
 
-		int studentActivity = -1;
-
-		studentActivity = sc.nextInt();
+		String studentAct =null;
+		studentAct = sc.nextLine();
+		int studentActivity = Integer.parseInt(studentAct);
+		
 		StudentMenu stmenu = new StudentMenu();
 		switch (studentActivity) {
 		case 1:
@@ -88,8 +89,9 @@ public class Main {
 
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
+		studentChoice = sc.nextInt();
 		try {
-			studentChoice = sc.nextInt();
+			
 
 			StudentMenu stmenu = new StudentMenu();
 			switch (studentChoice) {
@@ -132,7 +134,7 @@ public class Main {
 
 	}
 
-	/* step-2.1.1, dashbord for admin */
+	
 	private static void administrationActivity(Scanner sc) {
 
 		int administrationActivity = -1;
@@ -151,20 +153,13 @@ public class Main {
     	
     	
 		System.out.println("Select -> 10: Logout");
-
-//		6. Search for information about batches (by batch name, by start date range, by end
-//		date
-//		range, by start and end date. By course name of the batch)
-
-
-//		System.out.println("Select -> #: View List Of  Student in Batch");
 		System.out.println("\n\n");
 
 		System.out.println("Select -> 99: previous Page");
 		System.out.println("Select -> 0: Exit from System");
 		System.out.println();
 		System.out.println("----------------------------------------");
-		System.out.println("Chose any Of the Option above");
+		System.out.println("Chose any of the Option above");
 
 		administrationActivity = sc.nextInt();
 		Administrator admMenu = new Administrator();
@@ -237,7 +232,8 @@ public class Main {
 
 	
 	private static void admindashboard(Scanner sc) {
-		int adminChoice = -1;
+		
+		int adminChoice=0;
 		System.out.println("------------------------------------------------------");
 		System.out.println("              Administer Dashbroad                    ");
 		System.out.println();
@@ -247,10 +243,11 @@ public class Main {
 
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
-		Administrator admMenu = new Administrator();
+		adminChoice=sc.nextInt();
+		
 		try {
-			adminChoice = sc.nextInt();
-
+			 
+			Administrator admMenu = new Administrator();
 			switch (adminChoice) {
 			case 1:
 				admMenu.adminRegister(sc);
