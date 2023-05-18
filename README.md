@@ -1,5 +1,6 @@
 
 ## rebel-snow-4871
+![Master](https://github.com/Vivekgupta96/rebel-snow-4871/blob/main/img.png)
 # Project Details
 - This Project Is About the AUTOMATIC STUDENT REGISTRATIOIN SYSTEM where Students are enrolled in different courses under different
 technology tracks like- Android, Java, JEE, PHP, Oracle, etc.
