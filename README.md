@@ -9,7 +9,7 @@ application will help Institute create batches under a course, register the stud
 efficiently allocate the student in a batch.
 
 ## Schema Table 
-![Master](https://github.com/Vivekgupta96/Automatic-Student-Registration-System/blob/main/Schema_table.png)
+![Master](https://github.com/Vivekgupta96/Automatic-Student-Registration-System/blob/main/Schema_Table.png)
 ## Teck-Stack and Database
 
 - Java
