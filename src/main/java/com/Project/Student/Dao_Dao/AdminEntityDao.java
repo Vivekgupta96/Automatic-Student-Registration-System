@@ -42,6 +42,10 @@ public interface AdminEntityDao {
 
 	BatcheEntity searchBatch(int Batchid)throws SomeThingWrongException, NoRecordFoundException;
 
+	List<StudentEntity> admiViewAllStudent()throws SomeThingWrongException, NoRecordFoundException;
+
+	void registerStudentBatch(int studentid, int batchid)throws SomeThingWrongException, NoRecordFoundException;
+
 
 	
 

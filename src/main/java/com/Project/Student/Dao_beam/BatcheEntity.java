@@ -9,8 +9,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -24,27 +26,32 @@ public class BatcheEntity {
 	@Column(name = "Batch_name", nullable = false, length = 25, unique = true)
 	private String bartchName;
 
-	@Column(name = "total_seat", nullable = false, length = 10)
+	@Column(name = "Start_Date", nullable = false, length = 25)
+	private String startDate;
+
+	@Column(name = "End_Date", nullable = false, length = 25)
+	private String endDate;
+
+	@Column(name = "Batch_seat", nullable = false, length = 10)
 	private int seat;
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Registration> reg = new HashSet<>();
 
-	@OneToMany(mappedBy = "batch", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private Set<StudentEntity> students = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "Course_Id")
+	private CourseEntity courses ;
 
-	@ManyToMany
-	@JoinTable(name = "batch_course")
-	private Set<CourseEntity> courses = new HashSet<>();
+	public BatcheEntity() {}
 
-	public BatcheEntity() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public BatcheEntity(String bartchName, int seat, Set<StudentEntity> students, Set<CourseEntity> courses) {
+	public BatcheEntity(String bartchName, String startDate, String endDate, int seat, Set<Registration> reg,
+			CourseEntity courses) {
 		super();
 		this.bartchName = bartchName;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.seat = seat;
-		this.students = students;
+		this.reg = reg;
 		this.courses = courses;
 	}
 
@@ -64,6 +71,22 @@ public class BatcheEntity {
 		this.bartchName = bartchName;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
 	public int getSeat() {
 		return seat;
 	}
@@ -72,20 +95,27 @@ public class BatcheEntity {
 		this.seat = seat;
 	}
 
-	public Set<StudentEntity> getStudents() {
-		return students;
+	public Set<Registration> getReg() {
+		return reg;
 	}
 
-	public void setStudents(Set<StudentEntity> students) {
-		this.students = students;
+	public void setReg(Set<Registration> reg) {
+		this.reg = reg;
 	}
 
-	public Set<CourseEntity> getCourses() {
+	public CourseEntity getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<CourseEntity> courses) {
+	public void setCourses(CourseEntity courses) {
 		this.courses = courses;
 	}
+
+	@Override
+	public String toString() {
+		return "BatcheEntity [batchId=" + batchId + ", bartchName=" + bartchName + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", seat=" + seat + ", reg=" + reg + "]";
+	}
+
 
 }

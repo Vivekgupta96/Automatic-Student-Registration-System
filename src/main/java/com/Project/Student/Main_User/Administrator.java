@@ -15,7 +15,6 @@ import com.Project.Student.Exception.SomeThingWrongException;
 import com.Project.Student.Service.AutoGenerateAdminUserID;
 import com.Project.StudentRegistration.Main;
 
-
 public class Administrator {
 
 	public void adminRegister(Scanner sc) {
@@ -24,8 +23,6 @@ public class Administrator {
 		System.out.println("Welcome TO Admin Register ,Please Fill Requred Details");
 		System.out.println("Enter Your Name");
 		String adminName = sc.next();
-		System.out.println("Enter your UserName");// need to auto generate user name
-		String userId = sc.next();
 		System.out.println("Enter Your Password ");
 		String pass = sc.next();
 
@@ -71,74 +68,70 @@ public class Administrator {
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
 
 		try {
-
 			String status = admEtdao.adminAuthToDb(userId, pass);
-
 			System.out.println("Welcome : " + status);
 			message = true;
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 
 		return message;
 	}
 
 	public void AddNewCourse(Scanner sc) {
-		
-		try {
-		System.out.println("Enter Course Name");
-		String cName = sc.next();
-		
-		System.out.println("Enter Course Duration(IN Months)");
-		int cduration = sc.nextInt();
-		
-		System.out.println("Enter Course Deacription (fUllTime/PartTime)");
-		String description=sc.next();
-		
-		System.out.println("Enter course fee");
-		double cFee = sc.nextDouble();
-		System.out.println("Enter Course Instructer");
-		String InsName = sc.next();
-
-		CourseEntity cs = new CourseEntity();
-		cs.setCorseName(cName);
-		cs.setDescription(description);
-		cs.setDuration(cduration);
-		cs.setFee(cFee);
-		cs.setCourseInstructor(InsName);
-
-		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
 
 		try {
-			boolean res = admEtdao.admiNewCourseAdd(cs);
-			if (res) {
-				System.out.println("Course Added Succesfully");
-				System.out.println(cs);
+			System.out.println("Enter Course Name");
+			String cName = sc.next();
+
+			System.out.println("Enter Course Duration(IN Months)");
+			int cduration = sc.nextInt();
+
+			System.out.println("Enter Course Deacription (FullTime/PartTime)");
+			String description = sc.next();
+
+			System.out.println("Enter course fee");
+			double cFee = sc.nextDouble();
+			System.out.println("Enter Course Instructer");
+			String InsName = sc.next();
+
+			CourseEntity cs = new CourseEntity();
+			cs.setCorseName(cName);
+			cs.setDescription(description);
+			cs.setDuration(cduration);
+			cs.setFee(cFee);
+			cs.setCourseInstructor(InsName);
+
+			AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+			try {
+				boolean res = admEtdao.admiNewCourseAdd(cs);
+				if (res) {
+					System.out.println("Course Added Succesfully");
+					System.out.println(cs);
+				}
+			} catch (SomeThingWrongException e) {
+
+				e.printStackTrace();
 			}
-		} catch (SomeThingWrongException e) {
 
-			e.printStackTrace();
-		}
-		
 		} catch (InputMismatchException e) {
 			System.out.println("Invalid Input Entry!Please Select the from Given Input");
 			System.out.println("------------------------------------------------------");
-			 AddNewCourse( sc);
+			AddNewCourse(sc);
 		}
 
 	}
 
 	public void updateCourseDetail(Scanner sc) {
 
-		System.out.println("Enter course fee");
-		double cFee = sc.nextDouble();
 		System.out.println("Enter Course Id");
 		int courseId = sc.nextInt();
-
+		System.out.println("Enter course fee");
+		double cFee = sc.nextDouble();
+		
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		try {
 			CourseEntity res;
 			try {
@@ -164,7 +157,6 @@ public class Administrator {
 	public void viewAllCourse() {
 
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		try {
 			List<CourseEntity> res;
 			try {
@@ -191,9 +183,8 @@ public class Administrator {
 
 		System.out.println("Enter Course Id to Delete Course");
 		int courseId = sc.nextInt();
-
+		
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		try {
 			boolean res;
 			try {
@@ -220,9 +211,8 @@ public class Administrator {
 
 		System.out.println("Enter Course Id to Search Course");
 		int courseId = sc.nextInt();
-
+		
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		CourseEntity res;
 		try {
 			res = admEtdao.adminCourseSerch(courseId);
@@ -237,42 +227,50 @@ public class Administrator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void Logout() {
-		Main.dashboardMenu();	
+		Main.dashboardMenu();
 	}
-	
+
 	public void createBatch(Scanner sc) {
 
-		System.out.println("enter the Batch details");
-		System.out.println("enter the Batch Name ");
+		System.out.println("Enter the Batch details");
+		System.out.println("------------------------");
+		System.out.println("Enter the Batch Name:  ");
 		String bname = sc.next();
+		System.out.println("Enter the Batch Start Date: ");
+		String startDate = sc.next();
+		System.out.println("Enter the Batch End Date:  ");
+		String bendDatename = sc.next();
+		
 		System.out.println("Enter the No  of the seat in batch : ");
 		int noOfSeat = sc.nextInt();
-		BatcheEntity bt=new BatcheEntity();	
-		bt.setBartchName(bname);
-		bt.setSeat(noOfSeat);
 		
+		BatcheEntity bt = new BatcheEntity();
+		bt.setBartchName(bname);
+		bt.setStartDate(startDate);
+		bt.setEndDate(bendDatename);
+		bt.setSeat(noOfSeat);
+
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
 
-		boolean  res;
-			try {
-				res = admEtdao.adminAddBatch(bt);
-				if (res ) {
-					System.out.println(bt);
+		boolean res;
+		try {
+			res = admEtdao.adminAddBatch(bt);
+			if (res) {
+				System.out.println(bt);
 
-				} else {
-					System.out.println("error Occured or corse Not Exist!");
-				}
-			
-			} catch (SomeThingWrongException e) {
-				e.printStackTrace();
+			} else {
+				System.out.println("Error Occured !");
 			}
-		
+		} catch (SomeThingWrongException e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
 	public void updateBatchDetail(Scanner sc) {
-		
+
 		System.out.println("Enter Batch Id");
 		int batchId = sc.nextInt();
 		System.out.println("Enter Batch Updated Seat");
@@ -303,21 +301,19 @@ public class Administrator {
 	}
 
 	public void addCousesToBatch(Scanner sc) {
-	    System.out.println("-----------Course Add to Batch-----------");
+		System.out.println("-----------Course Add to Batch-----------");
 		System.out.println("Enter Batch Id");
 		int bid = sc.nextInt();
 		System.out.println("Enter Course Id");
 		int courseId = sc.nextInt();
 
 		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
 		try {
 			CourseEntity res;
 			try {
 				res = admEtdao.admiCourseToBatch(bid, courseId);
 				if (res != null) {
-					System.out.println("Course Update Succesfully");
-					System.out.println(res);
+					System.out.println("Course Added to Batch Succesfully");
 				} else {
 					System.out.println("error Occured");
 				}
@@ -333,41 +329,9 @@ public class Administrator {
 
 	}
 
-	public void addStudentToBatch(Scanner sc) {
-		System.out.println("-----------Student Add to Batch-----------");
-		System.out.println("Enter Batch Id");
-		int bid = sc.nextInt();
-		System.out.println("Enter Student RollNo");
-		int courseId = sc.nextInt();
-
-		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
-		try {
-			StudentEntity res;
-			try {
-				res = admEtdao.admiStudentToBatch(bid, courseId);
-				if (res != null) {
-					System.out.println("Student added Succesfully");
-					System.out.println(res);
-				} else {
-					System.out.println("error Occured");
-				}
-			} catch (NoRecordFoundException e) {
-
-				e.printStackTrace();
-			}
-
-		} catch (SomeThingWrongException e) {
-
-			e.printStackTrace();
-		}
-
-		
-	}
-	
 	public void searchBatch(Scanner sc) {
 		System.out.println("-----------View Batch Detail-----------");
-		
+
 		System.out.println("Enter BatchId");
 		int batchid = sc.nextInt();
 
@@ -379,12 +343,34 @@ public class Administrator {
 				res = admEtdao.searchBatch(batchid);
 				if (res != null) {
 					System.out.println("Student Detail batchwise");
-					System.out.println("BatchName  :"+res.getBartchName());
-					System.out.println("Total Seats   :"+res.getSeat());
-					System.out.println("Total Student :"+res.getStudents().size());
-					
+					System.out.println("BatchName  :" + res.getBartchName());
+					System.out.println("Total Seats   :" + res.getSeat());
 				} else {
 					System.out.println("error Occured");
+				}
+			} catch (NoRecordFoundException e) {
+
+				e.printStackTrace();
+			}
+
+		} catch (SomeThingWrongException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void viewAllStudent(Scanner sc) {
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+		try {
+			List<StudentEntity> res;
+			try {
+				res = admEtdao.admiViewAllStudent();
+				if (res != null) {
+					System.out.println("All Student Detail");
+					res.forEach(System.out::println);
+				} else {
+					System.out.println("No Student Avalable");
 				}
 			} catch (NoRecordFoundException e) {
 
@@ -399,6 +385,26 @@ public class Administrator {
 		
 	}
 
+	public void registerStudentToBatch(Scanner sc) {
+		System.out.println("-----------View Batch Detail-----------");
 
-	
+		System.out.println("Enter Student Id");
+		int Studentid = sc.nextInt();
+		System.out.println("Enter BatchId");
+		int batchid = sc.nextInt();
+
+		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
+
+		try {
+			admEtdao.registerStudentBatch(Studentid,batchid);
+			System.out.println("Student registered For Batch Succesfully");
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		
+	}
+
 }

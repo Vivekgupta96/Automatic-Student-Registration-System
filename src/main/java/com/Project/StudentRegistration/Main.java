@@ -6,36 +6,31 @@ import com.Project.Student.Main_User.Administrator;
 import com.Project.Student.Main_User.StudentMenu;
 
 public class Main {
-
-
 	public static void studentAactivity(Scanner sc) {
 
 		System.out.println("------------------------------------------------------");
-		System.out.println("                 Hellow Student!                      ");
+		System.out.println("              *********************                   ");
 		System.out.println("------------------------------------------------------");
 		System.out.println("Select -> 1 Update password ");
 		System.out.println("Select -> 2 Update email Id");
-		System.out.println("Select -> 3 See all courses Avalable List");
-		System.out.println("Select -> 4 delete your Accout");
-		System.out.println("Select -> 5 Logout from System");
-		System.out.println("Select -> 7 Register For courses");
-		System.out.println("Select -> 8 See all Enrolled Course");
-		
-		System.out.println("Select -> 6  Back To Student Dashboard");
+		System.out.println("Select -> 3 See all Courses List");
+		System.out.println("Select -> 4 Register For Course In Batch");
+		System.out.println("Select -> 5 See all Enrolled Course");
+		System.out.println("Select -> 6 Delete your Account");
+
+		System.out.println("Select -> 7 Logout ");
 		System.out.println("\n\n");
 		System.out.println("Select -> 0  Exit from system");
+		System.out.println("Select -> 99  Back To DashBoard");
 
-		String studentAct =null;
-		studentAct = sc.nextLine();
-		int studentActivity = Integer.parseInt(studentAct);
-		
+		int studentActivity = sc.nextInt();
+
 		StudentMenu stmenu = new StudentMenu();
 		switch (studentActivity) {
 		case 1:
 			stmenu.UpdatePassword(sc);
 			studentAactivity(sc);
 			break;
-
 		case 2:
 			stmenu.UpdateEmail(sc);
 			studentAactivity(sc);
@@ -44,26 +39,24 @@ public class Main {
 			stmenu.viewAllStudentCourse();
 			studentAactivity(sc);
 			break;
-		case 4:
+		case 6:
 			stmenu.deleteStudentAccout(sc);
 			dashboardMenu();
 			break;
-		case 5:
+		case 7:
 			stmenu.Logout(sc);
 			break;
-		case 7:
+		case 4:
 			stmenu.registerForCourses(sc);
 			studentAactivity(sc);
 			break;
-		case 8:
+		case 5:
 			stmenu.SeeEnrollCourses(sc);
 			studentAactivity(sc);
 			break;
-
-		case 6:
+		case 99:
 			studentdashboard(sc);
 			break;
-
 		case 0:
 			System.out.println("Thanks you Visit Again");
 			break;
@@ -91,14 +84,13 @@ public class Main {
 		System.out.println("Select-> 0 for Exit  ");
 		studentChoice = sc.nextInt();
 		try {
-			
 
 			StudentMenu stmenu = new StudentMenu();
 			switch (studentChoice) {
 			case 1:
 				stmenu.enrollmentStudent(sc);
 				System.out.println("------------------------------------------------------");
-				System.out.println("student can Login Now");
+				System.out.println("******Student can Login Now**********");
 				studentdashboard(sc);
 				break;
 
@@ -108,11 +100,11 @@ public class Main {
 					studentAactivity(sc);
 
 				} else {
-					System.out.println("Account Not Exist");
 					studentdashboard(sc);
 				}
 				break;
-			case 3:studentdashboard(sc);
+			case 3:
+				dashboardMenu();
 
 				break;
 
@@ -134,25 +126,23 @@ public class Main {
 
 	}
 
-	
 	private static void administrationActivity(Scanner sc) {
 
 		int administrationActivity = -1;
 		System.out.println("----------------------------------------");
-		System.out.println("Select -> 1: Add new Course");
-		System.out.println("Select -> 2: update course detail");
-		System.out.println("Select -> 3: view All Course");
+		System.out.println("Select -> 1: Add New Course");
+		System.out.println("Select -> 2: update Course ");
+		System.out.println("Select -> 3: View All Course");
 		System.out.println("Select -> 4: Delete Course");
 		System.out.println("Select -> 5: Search Course");
 		System.out.println("Select -> 6: Create Batch");
-		System.out.println("Select -> 7: update Seat in batch");
-    	System.out.println("Select -> 8: Add Couses To Batch");
-    	
-    	System.out.println("Select -> 9: Add Student To Batch");
-    	System.out.println("Select -> 11: Search student ");
-    	
-    	
-		System.out.println("Select -> 10: Logout");
+		System.out.println("Select -> 7: update Batch Details");
+		System.out.println("Select -> 8: Add Couses To Batch");
+		System.out.println("Select -> 9: Search Batch ");
+		System.out.println("Select -> 10: View All Student ");
+		System.out.println("Select -> 11: Register Student To Batch ");
+
+		System.out.println("Select -> 12: Logout");
 		System.out.println("\n\n");
 
 		System.out.println("Select -> 99: previous Page");
@@ -197,23 +187,23 @@ public class Main {
 		case 8:
 			admMenu.addCousesToBatch(sc);
 			administrationActivity(sc);
-			
 			break;
 		case 9:
-			admMenu.addStudentToBatch(sc);
-			administrationActivity(sc);
-			
-			break;
-		case 11:
 			admMenu.searchBatch(sc);
 			administrationActivity(sc);
-			
 			break;
 		case 10:
-			admMenu.Logout();
-			
+			admMenu.viewAllStudent(sc);
+			administrationActivity(sc);
+			break;
+		case 11:
+			admMenu.registerStudentToBatch(sc);
+			administrationActivity(sc);
 			break;
 
+		case 12:
+			admMenu.Logout();
+			break;
 		case 99:
 			admindashboard(sc);
 			break;
@@ -230,10 +220,9 @@ public class Main {
 		}
 	}
 
-	
 	private static void admindashboard(Scanner sc) {
-		
-		int adminChoice=0;
+
+		int adminChoice = 0;
 		System.out.println("------------------------------------------------------");
 		System.out.println("              Administer Dashbroad                    ");
 		System.out.println();
@@ -243,10 +232,10 @@ public class Main {
 
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
-		adminChoice=sc.nextInt();
-		
+		adminChoice = sc.nextInt();
+
 		try {
-			 
+
 			Administrator admMenu = new Administrator();
 			switch (adminChoice) {
 			case 1:
@@ -289,7 +278,7 @@ public class Main {
 	}
 
 	/* step-1, dashbord for both admin and student */
-	
+
 	public static void dashboardMenu() {
 
 		Scanner sc = new Scanner(System.in);

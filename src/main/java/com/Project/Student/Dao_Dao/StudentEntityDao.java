@@ -11,7 +11,7 @@ public interface StudentEntityDao {
 
 	boolean addStudentToDb(StudentEntity s) throws SomeThingWrongException;
 
-	void  studentAuthToDb(String userId, String pass)throws SomeThingWrongException,NoRecordFoundException;
+	String  studentAuthToDb(String userId, String pass)throws SomeThingWrongException,NoRecordFoundException;
 
 	String studentUpdatePassword(int userId,String oldpass, String newpass)throws SomeThingWrongException,NoRecordFoundException;
 
@@ -21,8 +21,7 @@ public interface StudentEntityDao {
 
 	String deleteAccout(int roolNo)throws SomeThingWrongException,NoRecordFoundException;
 
-	void registerCourses(int registerForCourses,int courseid)throws SomeThingWrongException,NoRecordFoundException;
-
-	void StudentEnrollCourses(int studentRollNo)throws SomeThingWrongException,NoRecordFoundException;
+	CourseEntity StudentEnrollCourses(int studentRollNo)throws SomeThingWrongException,NoRecordFoundException;
+	void registerCoursesInBatch(int studentid, int batchid)throws SomeThingWrongException,NoRecordFoundException;
 
 }

@@ -3,8 +3,10 @@ package com.Project.Student.Dao_Dao;
 import java.util.*;
 
 import com.Project.Student.Dao_Eutil.EMUtils;
+import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.LoggedInUserId;
+import com.Project.Student.Dao_beam.Registration;
 import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
@@ -37,31 +39,28 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 	}
 
 	@Override
-	public void studentAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException {
+	public String studentAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException {
 		EntityManager em = null;
-		Integer authstudentRoll = null;
 		try {
 			em = EMUtils.getConnection();
 
-			String studentAuth = "SELECT s.roll FROM  StudentEntity s WHERE  s.studentUserId = :userId AND s.password = :password AND isDeactivate=0";
+			String studentAuth = "SELECT s FROM  StudentEntity s WHERE  s.studentUserId = :userId AND s.password = :password AND isDeactivate=0";
 			Query qq = em.createQuery(studentAuth, StudentEntity.class);
 			qq.setParameter("userId", userId);
 			qq.setParameter("password", pass);
-			List<Integer> listInt = (List<Integer>) qq.getResultList();
-			if (listInt.size() == 0) {
-				throw new SomeThingWrongException("password or userId are Incorrect");
+			StudentEntity listInt =  (StudentEntity) qq.getSingleResult();
+			if (listInt==null) {
+				throw new SomeThingWrongException("password or userId or Acitve Not Exits!");
 			}
-			LoggedInUserId.studentloggedInUserId = listInt.get(0);
-
+			return listInt.getfName()+listInt.getlName();
 		} catch (PersistenceException px) {
 
-			// throw new SomeThingWrongException("Error occured");
-			throw new SomeThingWrongException(px.getMessage());
+			throw new SomeThingWrongException("'Account Not found");
 		} finally {
 
 			em.close();
+			
 		}
-
 	}
 
 	@Override
@@ -140,9 +139,9 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 	@Override
 	public List<CourseEntity> viewAllCourses() throws SomeThingWrongException, NoRecordFoundException {
 		List<CourseEntity> res = null;
-		EntityManager em = EMUtils.getConnection();
+		EntityManager em = null;
 		try {
-
+			em = EMUtils.getConnection();
 			String studentQry = "FROM CourseEntity a ";
 			Query qq = em.createQuery(studentQry);
 			res = qq.getResultList();
@@ -184,28 +183,31 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 		return res;
 	}
 
+	
 	@Override
-	public void registerCourses(int studentid, int courseid) throws SomeThingWrongException, NoRecordFoundException {
-
-		EntityManager em = EMUtils.getConnection();
+	public void registerCoursesInBatch(int studentid, int batchid)
+			throws SomeThingWrongException, NoRecordFoundException {
+		EntityManager em=null;
 		try {
+			em = EMUtils.getConnection();
 			em.getTransaction().begin();
-			StudentEntity se = em.find(StudentEntity.class, studentid);
-			CourseEntity ce = em.find(CourseEntity.class, courseid);
+			StudentEntity st = em.find(StudentEntity.class, studentid);
+			BatcheEntity bt=em.find(BatcheEntity.class, batchid);
 
-			if (ce != null && se != null) {
-
-				ce.getStudents().add(se);
-				se.getCourses().add(ce);
-				em.persist(ce);
-				em.persist(se);
-				em.getTransaction().commit();
-
-			} else {
-				em.getTransaction().rollback();
-				throw new NoRecordFoundException("student does Not Exits!");
+			if (st==null) {
+				throw new NoRecordFoundException("student does Not Exits!");	
 			}
-
+			if (bt==null) {
+				throw new NoRecordFoundException("Batch does Not Exits!");	
+			}
+			Registration reg=new Registration();
+			reg.setBatcheEntity(bt);
+			reg.setStudentEnitty(st);
+			bt.getReg().add(reg);
+			st.getReg().add(reg);
+			em.persist(reg);
+			em.persist(st);
+			em.persist(bt);
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
 		} finally {
@@ -215,37 +217,26 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 	}
 
 	@Override
-	public void StudentEnrollCourses(int studentRollNo) throws SomeThingWrongException, NoRecordFoundException {
-		EntityManager em = EMUtils.getConnection();
-		
-		
-		
+	public CourseEntity StudentEnrollCourses(int studentRollNo) throws SomeThingWrongException, NoRecordFoundException {
+		EntityManager em=null;
 		try {
-			em.getTransaction().begin();
-
-			StudentEntity se = em.find(StudentEntity.class, studentRollNo);
-
-			if (se != null) {
-				
-				Set<CourseEntity>  res =(Set<CourseEntity>) se.getCourses();
-				
-				for(CourseEntity cc:res) {
-					
-					System.out.println(cc.getCorseName());
-					
-				}
-
-			} else {
-				em.getTransaction().rollback();
-				throw new NoRecordFoundException("student does Not Exits!");
+			em = EMUtils.getConnection();
+			StudentEntity st = em.find(StudentEntity.class, studentRollNo);
+			if (st==null) {
+				throw new NoRecordFoundException("Student does Not Exits!");	
 			}
-
+			
+			
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
 		} finally {
 			em.close();
 		}
-
+		return null;
 	}
+	
+	
+
+
 
 }

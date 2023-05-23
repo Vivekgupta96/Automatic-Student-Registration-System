@@ -10,10 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class StudentEntity {
@@ -23,8 +20,11 @@ public class StudentEntity {
 	@Column(name = "studentRollNo")
 	private int roll;
 
-	@Column(name = "StudentName", length = 20, nullable = false)
-	private String stName;
+	@Column(name = "First_Name", length = 20, nullable = false)
+	private String fName;
+	
+	@Column(name = "Last_Name", length = 20, nullable = false)
+	private String lName;
 
 	@Column(name = "StudentEmail", length = 50, unique = true)
 	private String email;
@@ -41,130 +41,103 @@ public class StudentEntity {
 	@Column(name = "isAccoutDeactivate")
 	private int isDeactivate;
 
-	@ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinColumn(name = "StudentBatchId")
-	private BatcheEntity batch;
-	
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "studentCourse", joinColumns = { @JoinColumn(name = "studentRollNo") }, inverseJoinColumns = {
-			@JoinColumn(name = "courseId") })
-	private Set<CourseEntity> courses = new HashSet<>();
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Registration> reg=new HashSet<>();
 
+	public StudentEntity() {}
 
-	public StudentEntity() {
+	public StudentEntity(String fName, String lName, String email, String address, String studentUserId,
+			String password, int isDeactivate, Set<Registration> reg) {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public StudentEntity(String stName, String email, String address, String studentUserId, String password,
-			int isDeactivate, BatcheEntity batch, Set<CourseEntity> courses) {
-		super();
-		this.stName = stName;
+		this.fName = fName;
+		this.lName = lName;
 		this.email = email;
 		this.address = address;
 		this.studentUserId = studentUserId;
 		this.password = password;
 		this.isDeactivate = isDeactivate;
-		this.batch = batch;
-		this.courses = courses;
+		this.reg = reg;
 	}
-
 
 	public int getRoll() {
 		return roll;
 	}
 
-
 	public void setRoll(int roll) {
 		this.roll = roll;
 	}
 
-
-	public String getStName() {
-		return stName;
+	public String getfName() {
+		return fName;
 	}
 
-
-	public void setStName(String stName) {
-		this.stName = stName;
+	public void setfName(String fName) {
+		this.fName = fName;
 	}
 
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getAddress() {
 		return address;
 	}
 
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 
 	public String getStudentUserId() {
 		return studentUserId;
 	}
 
-
 	public void setStudentUserId(String studentUserId) {
 		this.studentUserId = studentUserId;
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public int getIsDeactivate() {
 		return isDeactivate;
 	}
 
-
 	public void setIsDeactivate(int isDeactivate) {
 		this.isDeactivate = isDeactivate;
 	}
 
-
-	public BatcheEntity getBatch() {
-		return batch;
+	public Set<Registration> getReg() {
+		return reg;
 	}
 
-
-	public void setBatch(BatcheEntity batch) {
-		this.batch = batch;
-	}
-
-
-	public Set<CourseEntity> getCourses() {
-		return courses;
-	}
-
-
-	public void setCourses(Set<CourseEntity> courses) {
-		this.courses = courses;
+	public void setReg(Set<Registration> reg) {
+		this.reg = reg;
 	}
 
 	@Override
 	public String toString() {
-		return "StudentEntity [roll=" + roll + ", stName=" + stName + ", email=" + email + ", address=" + address
-				+ ", studentUserId=" + studentUserId + ", password=" + password + ", isDeactivate=" + isDeactivate
-				+ "]";
+		return "StudentEntity [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+				+ ", address=" + address + ", studentUserId=" + studentUserId + ", password=" + password
+				+ ", isDeactivate=" + isDeactivate + ", reg=" + reg + "]";
 	}
+
+	
 	
 }

@@ -3,6 +3,7 @@ package com.Project.Student.Dao_Dao;
 import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
+import com.Project.Student.Dao_beam.Registration;
 import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
@@ -194,9 +195,9 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 
 	@Override
 	public boolean adminAddBatch(BatcheEntity bt) throws SomeThingWrongException {
-		
-		boolean b_status=false;
-		EntityManager em=null;
+
+		boolean b_status = false;
+		EntityManager em = null;
 		try {
 			em = EMUtils.getConnection();
 			em.getTransaction().begin();
@@ -211,14 +212,14 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 			em.close();
 		}
 		return b_status;
-		
+
 	}
 
 	@Override
 	public BatcheEntity admiBatchUpdate(int seat, int batchId) throws SomeThingWrongException, NoRecordFoundException {
-		
-		BatcheEntity res=null;
-		EntityManager em=null;
+
+		BatcheEntity res = null;
+		EntityManager em = null;
 
 		try {
 			em = EMUtils.getConnection();
@@ -229,7 +230,7 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 				cs.setSeat(seat);
 				em.persist(cs);
 				em.getTransaction().commit();
-				res=cs;
+				res = cs;
 			} else {
 				throw new NoRecordFoundException("Course does Not Exits!");
 			}
@@ -241,91 +242,50 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 			em.close();
 		}
 		return res;
-		
+
 	}
 
-	
-	@Override
-	public CourseEntity admiCourseToBatch(int bid, int courseId)
+//	@Override
+//	public CourseEntity admiCourseToBatch(int bid, int courseId)
+//
+//	
+//			throws SomeThingWrongException, NoRecordFoundException {
+//		
+//		CourseEntity status = null;
+//		
+//		EntityManager em = EMUtils.getConnection();
+//
+//		try {
+//			em.getTransaction().begin();
+//			CourseEntity cs = em.find(CourseEntity.class, courseId);
+//			
+//			BatcheEntity bt=em.find(BatcheEntity.class, bid);
+//			if (cs != null&&bt!=null) {
+//
+//				bt.getCourses().add(cs);
+//				em.persist(bt);
+//				em.getTransaction().commit();
+//				status = cs;
+//			} else {
+//				throw new NoRecordFoundException("Course does Not Exits!");
+//			}
+//
+//		} catch (PersistenceException px) {
+//			throw new SomeThingWrongException(px.getMessage());
+//		} finally {
+//
+//			em.close();
+//		}
+//		return status;
+//	}
 
-	
-			throws SomeThingWrongException, NoRecordFoundException {
-		
-		CourseEntity status = null;
-		
-		EntityManager em = EMUtils.getConnection();
-
-		try {
-			em.getTransaction().begin();
-			CourseEntity cs = em.find(CourseEntity.class, courseId);
-			
-			BatcheEntity bt=em.find(BatcheEntity.class, bid);
-			if (cs != null&&bt!=null) {
-
-				bt.getCourses().add(cs);
-				em.persist(bt);
-				em.getTransaction().commit();
-				status = cs;
-			} else {
-				throw new NoRecordFoundException("Course does Not Exits!");
-			}
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.close();
-		}
-		return status;
-	}
-
-	
-	@Override
-	public StudentEntity admiStudentToBatch(int bid, int studentrollno)
-			throws SomeThingWrongException, NoRecordFoundException {
-		StudentEntity status = null;
-		
-		EntityManager em = EMUtils.getConnection();
-
-		try {
-			em.getTransaction().begin();
-			
-			StudentEntity cs = em.find(StudentEntity.class, studentrollno);
-			BatcheEntity bt=em.find(BatcheEntity.class, bid);
-			
-			if (cs != null&&bt!=null) {
-
-				bt.getStudents().add(cs);
-				cs.setBatch(bt);
-				em.persist(bt);
-				em.persist(cs);
-				em.getTransaction().commit();
-				status = cs;
-			} else {
-				throw new NoRecordFoundException("stuent or Batches  Not Exits!");
-			}
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.close();
-		}
-		return status;
-		
-	
-	}
-
-	
-	
 //	**************************************************************************************************************
 
 	@Override
-	public
-	BatcheEntity searchBatch(int Batchid)throws SomeThingWrongException, NoRecordFoundException {
+	public BatcheEntity searchBatch(int Batchid) throws SomeThingWrongException, NoRecordFoundException {
 		BatcheEntity status = null;
-		
-		EntityManager em=null;
+
+		EntityManager em = null;
 
 		try {
 			em = EMUtils.getConnection();
@@ -345,6 +305,95 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 		}
 		return status;
 	}
-	
-	
+
+	@Override
+	public CourseEntity admiCourseToBatch(int bid, int courseId)
+			throws SomeThingWrongException, NoRecordFoundException {
+		EntityManager em = null;
+
+		try {
+			em = EMUtils.getConnection();
+			em.getTransaction().begin();
+			BatcheEntity bt = em.find(BatcheEntity.class, bid);
+			CourseEntity ct = em.find(CourseEntity.class, courseId);
+
+			if (bt == null) {
+				throw new NoRecordFoundException("Batch Not Found");
+			}
+			if (ct == null) {
+				throw new NoRecordFoundException("Course Not Found");
+			}
+			ct.getBatche().add(bt);
+			bt.setCourses(ct);
+			em.persist(ct);
+			em.persist(bt);
+			em.getTransaction().commit();
+			return ct;
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public StudentEntity admiStudentToBatch(int bid, int studentrollno)
+			throws SomeThingWrongException, NoRecordFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<StudentEntity> admiViewAllStudent() throws SomeThingWrongException, NoRecordFoundException {
+		List<StudentEntity> res = null;
+		EntityManager em = EMUtils.getConnection();
+		try {
+
+			String adminAuth = "SELECT a FROM StudentEntity a ";
+			Query qq = em.createQuery(adminAuth);
+			res = qq.getResultList();
+			return res;
+		} catch (PersistenceException px) {
+
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+
+			em.close();
+		}
+	}
+
+	@Override
+	public void registerStudentBatch(int studentid, int batchid) throws NoRecordFoundException, SomeThingWrongException {
+		EntityManager em = null;
+
+		try {
+			em = EMUtils.getConnection();
+			em.getTransaction().begin();
+			BatcheEntity bt = em.find(BatcheEntity.class, batchid);
+			StudentEntity st = em.find(StudentEntity.class, studentid);
+			Registration reg= new Registration();
+			if (bt == null) {
+				throw new NoRecordFoundException("Batch Not Found");
+			}
+			if (st == null) {
+				throw new NoRecordFoundException("Student Not Found");
+			}
+			reg.setBatcheEntity(bt);
+			reg.setStudentEnitty(st);
+			st.getReg().add(reg);
+			bt.getReg().add(reg);
+			
+			em.persist(reg);
+			em.persist(st);
+			em.persist(bt);
+			em.getTransaction().commit();
+			
+		} catch (PersistenceException px) {
+			throw new SomeThingWrongException(px.getMessage());
+		} finally {
+			em.close();
+		}
+
+	}
+
 }
