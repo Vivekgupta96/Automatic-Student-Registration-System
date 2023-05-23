@@ -1,8 +1,6 @@
 package com.Project.Student.Dao_Dao;
 
 import java.util.List;
-
-import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.StudentEntity;
@@ -11,14 +9,8 @@ import com.Project.Student.Exception.SomeThingWrongException;
 
 public interface AdminEntityDao {
 
-	/**
-	 * 
-	 * @param admin
-	 * @return
-	 * @throws SomeThingWrongException
-	 */
-	boolean addAdminToDb(AdminEntity admin) throws SomeThingWrongException;
-
+	
+	
 	String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException;
 
 	

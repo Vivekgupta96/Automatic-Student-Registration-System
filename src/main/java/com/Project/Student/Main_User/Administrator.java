@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import com.Project.Student.Dao_Dao.AdminEntityDao;
 import com.Project.Student.Dao_Dao.AdminEntityDaoImpl;
-import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.StudentEntity;
@@ -17,42 +16,6 @@ import com.Project.StudentRegistration.Main;
 
 public class Administrator {
 
-	public void adminRegister(Scanner sc) {
-
-		String message = null;
-		System.out.println("Welcome TO Admin Register ,Please Fill Requred Details");
-		System.out.println("Enter Your Name");
-		String adminName = sc.next();
-		System.out.println("Enter Your Password ");
-		String pass = sc.next();
-
-		String genetuserid = AutoGenerateAdminUserID.userId(adminName);
-
-		AdminEntity admEt = new AdminEntity();
-		admEt.setAdminName(adminName);
-		admEt.setAdminUserId(genetuserid);
-		admEt.setAdminPassword(pass);
-
-		AdminEntityDao admEtdao = new AdminEntityDaoImpl();
-
-		try {
-			boolean status = admEtdao.addAdminToDb(admEt);
-			if (status) {
-				System.out.println("---------------------------------------------");
-				System.out.println("              Administer                     ");
-				System.out.println("Welcome : " + admEt.getAdminName());
-				System.out.println("User Id: " + admEt.getAdminUserId());
-				System.out.println("Your PassWord: " + admEt.getAdminPassword());
-			} else {
-				System.out.println("Error Occure");
-			}
-
-		} catch (SomeThingWrongException e) {
-
-			e.printStackTrace();
-		}
-
-	}
 
 	public boolean adminLoginAuthrticate(Scanner sc) {
 

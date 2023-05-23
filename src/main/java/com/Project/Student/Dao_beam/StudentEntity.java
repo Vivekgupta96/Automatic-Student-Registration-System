@@ -133,7 +133,7 @@ public class StudentEntity {
 
 	@Override
 	public String toString() {
-		return "StudentEntity [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+		return "Student_Details [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
 				+ ", address=" + address + ", studentUserId=" + studentUserId + ", password=" + password
 				+ ", isDeactivate=" + isDeactivate + ", reg=" + reg + "]";
 	}

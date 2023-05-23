@@ -1,6 +1,5 @@
 package com.Project.Student.Dao_Dao;
 
-import com.Project.Student.Dao_beam.AdminEntity;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.Registration;
@@ -9,7 +8,6 @@ import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 
 import java.util.List;
-
 import com.Project.Student.Dao_Eutil.EMUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
@@ -18,52 +16,20 @@ import jakarta.persistence.Query;
 public class AdminEntityDaoImpl implements AdminEntityDao {
 
 	@Override
-	public boolean addAdminToDb(AdminEntity adminDetailReg) throws SomeThingWrongException {
-
-		boolean Regiadmin = false;
-		EntityManager em = EMUtils.getConnection();
-		em.getTransaction().begin();
-
-		try {
-			em.persist(adminDetailReg);
-			Regiadmin = true;
-
-		} catch (PersistenceException px) {
-			throw new SomeThingWrongException(px.getMessage());
-		} finally {
-
-			em.getTransaction().commit();
-			em.close();
-		}
-		return Regiadmin;
-	}
-
-	@Override
 	public String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException {
 
 		String authadmin = null;
-		EntityManager em = EMUtils.getConnection();
 		try {
-
-			String adminAuth = "SELECT a.adminUserId FROM AdminEntity a WHERE a.adminUserId = :userId AND a.adminPassword = :password";
-			Query qq = em.createQuery(adminAuth, AdminEntity.class);
-			qq.setParameter("userId", userId);
-			qq.setParameter("password", pass);
-
-			List<String> list = (List<String>) qq.getResultList();
-			if (list.size() == 0) {
-
+			if (userId.equals("admin")&&pass.equals(pass)) {
+				authadmin="Admin Autheticate Succesfully";
+				
+			}else {
 				throw new SomeThingWrongException("userId or Password Are Incorrect");
 			}
-			authadmin = list.get(0);
-
 		} catch (PersistenceException px) {
 
 			throw new SomeThingWrongException("Unable to process request, try again later");
-		} finally {
-
-			em.close();
-		}
+		} 
 		return authadmin;
 
 	}
@@ -363,7 +329,8 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 	}
 
 	@Override
-	public void registerStudentBatch(int studentid, int batchid) throws NoRecordFoundException, SomeThingWrongException {
+	public void registerStudentBatch(int studentid, int batchid)
+			throws NoRecordFoundException, SomeThingWrongException {
 		EntityManager em = null;
 
 		try {
@@ -371,7 +338,7 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 			em.getTransaction().begin();
 			BatcheEntity bt = em.find(BatcheEntity.class, batchid);
 			StudentEntity st = em.find(StudentEntity.class, studentid);
-			Registration reg= new Registration();
+			Registration reg = new Registration();
 			if (bt == null) {
 				throw new NoRecordFoundException("Batch Not Found");
 			}
@@ -382,12 +349,12 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 			reg.setStudentEnitty(st);
 			st.getReg().add(reg);
 			bt.getReg().add(reg);
-			
+
 			em.persist(reg);
 			em.persist(st);
 			em.persist(bt);
 			em.getTransaction().commit();
-			
+
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
 		} finally {

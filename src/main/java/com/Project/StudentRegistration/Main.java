@@ -226,10 +226,8 @@ public class Main {
 		System.out.println("------------------------------------------------------");
 		System.out.println("              Administer Dashbroad                    ");
 		System.out.println();
-		System.out.println("Select -> 1 for Register Admin");
-		System.out.println("Select -> 2 for Login Admin");
-		System.out.println("Select -> 3 for Back DashBoard");
-
+		System.out.println("Select -> 1 for Login Admin");
+		System.out.println("Select -> 2 for Back DashBoard");
 		System.out.println();
 		System.out.println("Select-> 0 for Exit  ");
 		adminChoice = sc.nextInt();
@@ -239,23 +237,15 @@ public class Main {
 			Administrator admMenu = new Administrator();
 			switch (adminChoice) {
 			case 1:
-				admMenu.adminRegister(sc);
-				System.out.println("------------------------------------------------------");
-				System.out.println("You can Login Now");
-				admindashboard(sc);
-				break;
-
-			case 2:
 				boolean autheticateResult = admMenu.adminLoginAuthrticate(sc);
 				if (autheticateResult) {
-					System.out.println("user Validate");
 					administrationActivity(sc);
 				} else {
 					System.out.println("UserId or Password is Invalid");
 					admindashboard(sc);
 				}
 				break;
-			case 3:
+			case 2:
 				dashboardMenu();
 				break;
 
