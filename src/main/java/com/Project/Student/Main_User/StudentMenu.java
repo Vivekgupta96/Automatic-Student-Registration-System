@@ -216,8 +216,15 @@ public class StudentMenu {
 
 		try {
 
-			CourseEntity res = stEtdao.StudentEnrollCourses(StudentRollNo);
-			System.out.println("course alloted succesfully");
+			Set<CourseEntity> res = stEtdao.StudentEnrollCourses(StudentRollNo);
+			System.out.println("*******   Student Enrolled Courses  *********");
+			if(res==null) {
+				System.out.println("Student Not Erroled in any Course");
+			}else {
+				for(CourseEntity cc:res) {
+					System.out.println("Course_Name :"+cc.getCorseName());
+				}
+			}
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
 			e.printStackTrace();

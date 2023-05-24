@@ -11,11 +11,9 @@ import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
-import com.Project.Student.Service.AutoGenerateAdminUserID;
 import com.Project.StudentRegistration.Main;
 
 public class Administrator {
-
 
 	public boolean adminLoginAuthrticate(Scanner sc) {
 
@@ -331,7 +329,19 @@ public class Administrator {
 				res = admEtdao.admiViewAllStudent();
 				if (res != null) {
 					System.out.println("All Student Detail");
-					res.forEach(System.out::println);
+					System.out.println("****************************************");
+					for(StudentEntity ss:res) {
+						System.out.println(ss);
+						System.out.println("-------------------------------------");
+						System.out.println("Courses_Inrolled");
+						 Set<CourseEntity> couseEnrollByStd=ss.getCourses();
+						 for(CourseEntity cc:couseEnrollByStd) {
+							 System.out.println("course Name :"+cc.getCorseName());
+						 }
+						
+					}
+					//res.forEach(System.out::println);
+					
 				} else {
 					System.out.println("No Student Avalable");
 				}
@@ -349,7 +359,7 @@ public class Administrator {
 	}
 
 	public void registerStudentToBatch(Scanner sc) {
-		System.out.println("-----------View Batch Detail-----------");
+		System.out.println("-------Register Student In Batch With Course----------");
 
 		System.out.println("Enter Student Id");
 		int Studentid = sc.nextInt();

@@ -9,8 +9,6 @@ import com.Project.Student.Exception.SomeThingWrongException;
 
 public interface AdminEntityDao {
 
-	
-	
 	String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException;
 
 	

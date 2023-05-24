@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -41,13 +42,16 @@ public class StudentEntity {
 	@Column(name = "isAccoutDeactivate")
 	private int isDeactivate;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<CourseEntity> courses=new HashSet<>();
+	
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private Set<Registration> reg=new HashSet<>();
 
 	public StudentEntity() {}
 
 	public StudentEntity(String fName, String lName, String email, String address, String studentUserId,
-			String password, int isDeactivate, Set<Registration> reg) {
+			String password, int isDeactivate, Set<CourseEntity> courses, Set<Registration> reg) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
@@ -56,6 +60,7 @@ public class StudentEntity {
 		this.studentUserId = studentUserId;
 		this.password = password;
 		this.isDeactivate = isDeactivate;
+		this.courses = courses;
 		this.reg = reg;
 	}
 
@@ -123,6 +128,14 @@ public class StudentEntity {
 		this.isDeactivate = isDeactivate;
 	}
 
+	public Set<CourseEntity> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<CourseEntity> courses) {
+		this.courses = courses;
+	}
+
 	public Set<Registration> getReg() {
 		return reg;
 	}
@@ -133,11 +146,10 @@ public class StudentEntity {
 
 	@Override
 	public String toString() {
-		return "Student_Details [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
+		return "StudentEntity [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
 				+ ", address=" + address + ", studentUserId=" + studentUserId + ", password=" + password
-				+ ", isDeactivate=" + isDeactivate + ", reg=" + reg + "]";
+				+ ", isDeactivate=" + isDeactivate + "]";
 	}
 
-	
 	
 }

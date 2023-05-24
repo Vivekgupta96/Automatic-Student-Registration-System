@@ -1,5 +1,6 @@
 package com.Project.Student.Dao_Dao;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import com.Project.Student.Dao_Eutil.EMUtils;
@@ -187,27 +188,38 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 	@Override
 	public void registerCoursesInBatch(int studentid, int batchid)
 			throws SomeThingWrongException, NoRecordFoundException {
-		EntityManager em=null;
+		EntityManager em = null;
+
 		try {
 			em = EMUtils.getConnection();
 			em.getTransaction().begin();
+			BatcheEntity bt = em.find(BatcheEntity.class, batchid);
+			int crsId =bt.getCourses().getCouresId();
+			
+			CourseEntity ct=em.find(CourseEntity.class, crsId);
 			StudentEntity st = em.find(StudentEntity.class, studentid);
-			BatcheEntity bt=em.find(BatcheEntity.class, batchid);
-
-			if (st==null) {
-				throw new NoRecordFoundException("student does Not Exits!");	
+			Registration reg = new Registration();
+			if (st == null) {
+				throw new NoRecordFoundException("Student Not Found");
 			}
-			if (bt==null) {
-				throw new NoRecordFoundException("Batch does Not Exits!");	
+			if (ct == null) {
+				throw new NoRecordFoundException("Batch  Not have Couse Found");
 			}
-			Registration reg=new Registration();
 			reg.setBatcheEntity(bt);
 			reg.setStudentEnitty(st);
-			bt.getReg().add(reg);
+		    reg.setRegistrationDate((LocalDate.now()).toString());
+			
 			st.getReg().add(reg);
+			bt.getReg().add(reg);
+			st.getCourses().add(ct);
+			ct.getStudents().add(st);
+			
 			em.persist(reg);
 			em.persist(st);
+			em.persist(ct);
 			em.persist(bt);
+			em.getTransaction().commit();
+
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
 		} finally {
@@ -217,22 +229,23 @@ public class StudentEntityDaoImpl implements StudentEntityDao {
 	}
 
 	@Override
-	public CourseEntity StudentEnrollCourses(int studentRollNo) throws SomeThingWrongException, NoRecordFoundException {
+	public Set<CourseEntity> StudentEnrollCourses(int studentRollNo) throws SomeThingWrongException, NoRecordFoundException {
 		EntityManager em=null;
+	
 		try {
 			em = EMUtils.getConnection();
 			StudentEntity st = em.find(StudentEntity.class, studentRollNo);
 			if (st==null) {
 				throw new NoRecordFoundException("Student does Not Exits!");	
 			}
-			
-			
+			return (Set<CourseEntity>) st.getCourses();
+	
 		} catch (PersistenceException px) {
 			throw new SomeThingWrongException(px.getMessage());
 		} finally {
 			em.close();
 		}
-		return null;
+		
 	}
 	
 	

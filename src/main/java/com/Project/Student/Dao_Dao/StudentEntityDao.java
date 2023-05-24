@@ -1,6 +1,7 @@
 package com.Project.Student.Dao_Dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.StudentEntity;
@@ -21,7 +22,7 @@ public interface StudentEntityDao {
 
 	String deleteAccout(int roolNo)throws SomeThingWrongException,NoRecordFoundException;
 
-	CourseEntity StudentEnrollCourses(int studentRollNo)throws SomeThingWrongException,NoRecordFoundException;
+	Set<CourseEntity> StudentEnrollCourses(int studentRollNo)throws SomeThingWrongException,NoRecordFoundException;
 	void registerCoursesInBatch(int studentid, int batchid)throws SomeThingWrongException,NoRecordFoundException;
 
 }

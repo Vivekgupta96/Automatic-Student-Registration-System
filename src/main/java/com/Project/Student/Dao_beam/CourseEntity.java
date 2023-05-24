@@ -9,6 +9,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -33,6 +34,9 @@ public class CourseEntity {
 
 	@Column(name = "course_instructer", nullable = false)
 	private String courseInstructor;
+	
+	@ManyToMany(fetch = FetchType.EAGER,mappedBy ="courses" )
+	private Set<StudentEntity> students=new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER)
 	private Set<BatcheEntity> batche=new HashSet<>();
@@ -43,13 +47,14 @@ public class CourseEntity {
 	}
 
 	public CourseEntity(String corseName, int duration, String description, double fee, String courseInstructor,
-			Set<BatcheEntity> batche) {
+			Set<StudentEntity> students, Set<BatcheEntity> batche) {
 		super();
 		this.corseName = corseName;
 		this.duration = duration;
 		this.description = description;
 		this.fee = fee;
 		this.courseInstructor = courseInstructor;
+		this.students = students;
 		this.batche = batche;
 	}
 
@@ -101,6 +106,14 @@ public class CourseEntity {
 		this.courseInstructor = courseInstructor;
 	}
 
+	public Set<StudentEntity> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<StudentEntity> students) {
+		this.students = students;
+	}
+
 	public Set<BatcheEntity> getBatche() {
 		return batche;
 	}
@@ -111,10 +124,11 @@ public class CourseEntity {
 
 	@Override
 	public String toString() {
-		return "CourseEntity [couresId=" + couresId + ", corseName=" + corseName + ", duration=" + duration
+		return "Course [couresId=" + couresId + ", corseName=" + corseName + ", duration=" + duration
 				+ ", description=" + description + ", fee=" + fee + ", courseInstructor=" + courseInstructor
 				+ "]";
 	}
 
+	
 	
 }

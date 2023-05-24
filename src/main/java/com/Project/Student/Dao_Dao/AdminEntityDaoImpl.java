@@ -1,5 +1,9 @@
 package com.Project.Student.Dao_Dao;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import com.Project.Student.Dao_Eutil.EMUtils;
 import com.Project.Student.Dao_beam.BatcheEntity;
 import com.Project.Student.Dao_beam.CourseEntity;
 import com.Project.Student.Dao_beam.Registration;
@@ -7,8 +11,6 @@ import com.Project.Student.Dao_beam.StudentEntity;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
 
-import java.util.List;
-import com.Project.Student.Dao_Eutil.EMUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
@@ -337,21 +339,29 @@ public class AdminEntityDaoImpl implements AdminEntityDao {
 			em = EMUtils.getConnection();
 			em.getTransaction().begin();
 			BatcheEntity bt = em.find(BatcheEntity.class, batchid);
+			int crsId =bt.getCourses().getCouresId();
+			
+			CourseEntity ct=em.find(CourseEntity.class, crsId);
 			StudentEntity st = em.find(StudentEntity.class, studentid);
 			Registration reg = new Registration();
-			if (bt == null) {
-				throw new NoRecordFoundException("Batch Not Found");
-			}
 			if (st == null) {
 				throw new NoRecordFoundException("Student Not Found");
 			}
+			if (ct == null) {
+				throw new NoRecordFoundException("Batch  Not have Couse Found");
+			}
 			reg.setBatcheEntity(bt);
 			reg.setStudentEnitty(st);
+		    reg.setRegistrationDate((LocalDate.now()).toString());
+			
 			st.getReg().add(reg);
 			bt.getReg().add(reg);
-
+			st.getCourses().add(ct);
+			ct.getStudents().add(st);
+			
 			em.persist(reg);
 			em.persist(st);
+			em.persist(ct);
 			em.persist(bt);
 			em.getTransaction().commit();
 
