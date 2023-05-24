@@ -23,7 +23,7 @@ efficiently allocate the student in a batch.
 
 ##  Administer functionality
 
-- Register Admin
+
 - Login
 - Add Course
 - Update Course
