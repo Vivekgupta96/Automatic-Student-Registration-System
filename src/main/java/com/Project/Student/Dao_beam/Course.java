@@ -3,6 +3,7 @@ package com.Project.Student.Dao_beam;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,9 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-public class CourseEntity {
+@Table(name="Course_Table")
+public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,19 +38,23 @@ public class CourseEntity {
 	@Column(name = "course_instructer", nullable = false)
 	private String courseInstructor;
 	
-	@ManyToMany(fetch = FetchType.EAGER,mappedBy ="courses" )
-	private Set<StudentEntity> students=new HashSet<>();
+	
+	//A student can be enrolled in multiple courses, and a course
+	//can have multiple students.
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private Set<Student> students=new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<BatcheEntity> batche=new HashSet<>();
+	//one course can have multiple batches
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "courses")
+	private Set<Batche> batche=new HashSet<>();
 
-	public CourseEntity() {
+	public Course() {
 		super();
 
 	}
 
-	public CourseEntity(String corseName, int duration, String description, double fee, String courseInstructor,
-			Set<StudentEntity> students, Set<BatcheEntity> batche) {
+	public Course(String corseName, int duration, String description, double fee, String courseInstructor,
+			Set<Student> students, Set<Batche> batche) {
 		super();
 		this.corseName = corseName;
 		this.duration = duration;
@@ -106,19 +113,19 @@ public class CourseEntity {
 		this.courseInstructor = courseInstructor;
 	}
 
-	public Set<StudentEntity> getStudents() {
+	public Set<Student> getStudents() {
 		return students;
 	}
 
-	public void setStudents(Set<StudentEntity> students) {
+	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
 
-	public Set<BatcheEntity> getBatche() {
+	public Set<Batche> getBatche() {
 		return batche;
 	}
 
-	public void setBatche(Set<BatcheEntity> batche) {
+	public void setBatche(Set<Batche> batche) {
 		this.batche = batche;
 	}
 

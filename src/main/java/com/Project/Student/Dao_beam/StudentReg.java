@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Registration {
+@Table(name="Registration_Table")
+public class StudentReg {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,19 +23,19 @@ public class Registration {
 
 	@ManyToOne
 	@JoinColumn(name="Student_ID")
-	private StudentEntity studentEnitty;
+	private Student students;
 
 	@ManyToOne
 	@JoinColumn(name="Batche_ID")
-	private BatcheEntity batcheEntity;
+	private Batche batchs;
 
-	public Registration() {}
+	public StudentReg() {}
 
-	public Registration(String registrationDate, StudentEntity studentEnitty, BatcheEntity batcheEntity) {
+	public StudentReg( String registrationDate, Student students, Batche batchs) {
 		super();
 		this.registrationDate = registrationDate;
-		this.studentEnitty = studentEnitty;
-		this.batcheEntity = batcheEntity;
+		this.students = students;
+		this.batchs = batchs;
 	}
 
 	public int getRegistrationId() {
@@ -52,23 +54,22 @@ public class Registration {
 		this.registrationDate = registrationDate;
 	}
 
-	public StudentEntity getStudentEnitty() {
-		return studentEnitty;
+	public Student getStudents() {
+		return students;
 	}
 
-	public void setStudentEnitty(StudentEntity studentEnitty) {
-		this.studentEnitty = studentEnitty;
+	public void setStudents(Student students) {
+		this.students = students;
 	}
 
-	public BatcheEntity getBatcheEntity() {
-		return batcheEntity;
+	public Batche getBatchs() {
+		return batchs;
 	}
 
-	public void setBatcheEntity(BatcheEntity batcheEntity) {
-		this.batcheEntity = batcheEntity;
+	public void setBatchs(Batche batchs) {
+		this.batchs = batchs;
 	}
 
-	
 	
 
 }

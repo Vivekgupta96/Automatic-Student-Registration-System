@@ -14,9 +14,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-public class BatcheEntity {
+@Table(name="Batch_Table")
+public class Batche {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,17 +37,17 @@ public class BatcheEntity {
 	@Column(name = "Batch_seat", nullable = false, length = 10)
 	private int seat;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Registration> reg = new HashSet<>();
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "batchs")
+	private Set<StudentReg> reg = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "Course_Id")
-	private CourseEntity courses ;
+	private Course courses ;
 
-	public BatcheEntity() {}
+	public Batche() {}
 
-	public BatcheEntity(String bartchName, String startDate, String endDate, int seat, Set<Registration> reg,
-			CourseEntity courses) {
+	public Batche(String bartchName, String startDate, String endDate, int seat, Set<StudentReg> reg,
+			Course courses) {
 		super();
 		this.bartchName = bartchName;
 		this.startDate = startDate;
@@ -95,19 +97,19 @@ public class BatcheEntity {
 		this.seat = seat;
 	}
 
-	public Set<Registration> getReg() {
+	public Set<StudentReg> getReg() {
 		return reg;
 	}
 
-	public void setReg(Set<Registration> reg) {
+	public void setReg(Set<StudentReg> reg) {
 		this.reg = reg;
 	}
 
-	public CourseEntity getCourses() {
+	public Course getCourses() {
 		return courses;
 	}
 
-	public void setCourses(CourseEntity courses) {
+	public void setCourses(Course courses) {
 		this.courses = courses;
 	}
 

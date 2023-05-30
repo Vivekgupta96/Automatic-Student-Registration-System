@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,9 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
-public class StudentEntity {
+@Table(name="Student_Table")
+public class Student {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +33,10 @@ public class StudentEntity {
 	@Column(name = "StudentEmail", length = 50, unique = true)
 	private String email;
 
-	@Column(name = "studentAddress", length = 50, nullable = false)
-	private String address;
+//	@Column(name = "studentAddress", length = 50, nullable = false)
+//	private String address;
+	@Embedded
+	private Address address;
 
 	@Column(name = "studentUserId", nullable = false)
 	private String studentUserId;
@@ -42,16 +47,18 @@ public class StudentEntity {
 	@Column(name = "isAccoutDeactivate")
 	private int isDeactivate;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	private Set<CourseEntity> courses=new HashSet<>();
+	///
+	@ManyToMany(fetch = FetchType.EAGER,mappedBy = "students")
+	private Set<Course> courses=new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	private Set<Registration> reg=new HashSet<>();
+	//one Student can hava registration for many batches
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "students")
+	private Set<StudentReg> reg=new HashSet<>();
 
-	public StudentEntity() {}
+	public Student() {}
 
-	public StudentEntity(String fName, String lName, String email, String address, String studentUserId,
-			String password, int isDeactivate, Set<CourseEntity> courses, Set<Registration> reg) {
+	public Student(String fName, String lName, String email, Address address, String studentUserId, String password,
+			int isDeactivate, Set<Course> courses, Set<StudentReg> reg) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
@@ -96,11 +103,11 @@ public class StudentEntity {
 		this.email = email;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
@@ -128,28 +135,28 @@ public class StudentEntity {
 		this.isDeactivate = isDeactivate;
 	}
 
-	public Set<CourseEntity> getCourses() {
+	public Set<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(Set<CourseEntity> courses) {
+	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 
-	public Set<Registration> getReg() {
+	public Set<StudentReg> getReg() {
 		return reg;
 	}
 
-	public void setReg(Set<Registration> reg) {
+	public void setReg(Set<StudentReg> reg) {
 		this.reg = reg;
 	}
 
 	@Override
 	public String toString() {
-		return "StudentEntity [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email
-				+ ", address=" + address + ", studentUserId=" + studentUserId + ", password=" + password
-				+ ", isDeactivate=" + isDeactivate + "]";
+		return "Student [roll=" + roll + ", fName=" + fName + ", lName=" + lName + ", email=" + email + ", address="
+				+ address + ", studentUserId=" + studentUserId + ", isDeactivate=" + isDeactivate + "]";
 	}
 
 	
+
 }

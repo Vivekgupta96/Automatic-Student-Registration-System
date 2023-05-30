@@ -2,7 +2,7 @@ package com.Project.Student.Service;
 
 import java.util.Random;
 
-public class AutoGenerateAdminUserID {
+public class AutoGenerateUserIDs {
 
 	public  static String userId(String name) {
 

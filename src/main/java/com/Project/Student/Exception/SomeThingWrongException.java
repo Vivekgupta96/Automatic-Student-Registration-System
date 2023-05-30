@@ -6,6 +6,9 @@ public class SomeThingWrongException extends Exception {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 
+	
 }

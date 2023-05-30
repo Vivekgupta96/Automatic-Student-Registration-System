@@ -3,13 +3,17 @@ package com.Project.Student.Main_User;
 import java.util.*;
 import java.util.Scanner;
 
-import com.Project.Student.Dao_Dao.StudentEntityDao;
-import com.Project.Student.Dao_Dao.StudentEntityDaoImpl;
-import com.Project.Student.Dao_beam.CourseEntity;
-import com.Project.Student.Dao_beam.StudentEntity;
+import com.Project.Student.Dao_Dao.AdminDao;
+import com.Project.Student.Dao_Dao.AdminDaoImpl;
+import com.Project.Student.Dao_Dao.StudentDao;
+import com.Project.Student.Dao_Dao.StudentDaoImpl;
+import com.Project.Student.Dao_beam.Address;
+import com.Project.Student.Dao_beam.Course;
+import com.Project.Student.Dao_beam.LoggedInUserId;
+import com.Project.Student.Dao_beam.Student;
 import com.Project.Student.Exception.NoRecordFoundException;
 import com.Project.Student.Exception.SomeThingWrongException;
-import com.Project.Student.Service.AutoGenerateAdminUserID;
+import com.Project.Student.Service.AutoGenerateUserIDs;
 import com.Project.StudentRegistration.Main;
 
 
@@ -18,37 +22,51 @@ public class StudentMenu {
 	public void enrollmentStudent(Scanner sc) {
 		String message = null;
 		System.out.println("Welcome TO student enrollment ,Please Fill Requred Details");
+		System.out.println();
 		System.out.println("Enter First Name : ");
 		String studentfName = sc.next();
 		System.out.println("Enter Last Name :");
 		String studentlName = sc.next();
-
+		
+		//************************************
+		System.out.println("********Enter  Address ************");
+		System.out.println("Enter City Name");
+		String cityName = sc.next();
+		
+		System.out.println("Enter PinCode Name");
+		String pinCode = sc.next();
+		
+		System.out.println("Enter State Name");
+		String State = sc.next();
+		
 		System.out.println("Enter Email Id  :");
 		String Email = sc.next();
-		System.out.println("Enter  Address  :");
-		String Address = sc.next();
 		System.out.println("Enter Login Password :");
 		String pass = sc.next();
 
-		String genetuserid = AutoGenerateAdminUserID.StudentuserId();
+		String genetuserid = AutoGenerateUserIDs.StudentuserId();
 
-		StudentEntity s = new StudentEntity();
-
+		Student s = new Student();
+		Address ad=new Address();
+		ad.setCity(cityName);
+		ad.setZipCode(pinCode);
+		ad.setState(State);
+		
 		s.setfName(studentfName);
 		s.setlName(studentlName);
 		s.setStudentUserId(genetuserid);
 		s.setEmail(Email);
-		s.setAddress(Address);
+		s.setAddress(ad);
 		s.setPassword(pass);
 		s.setIsDeactivate(0);
 
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		StudentDao stEtdao = new StudentDaoImpl();
 
 		try {
 			boolean status = stEtdao.addStudentToDb(s);
 			if (status) {
 				System.out.println("---------------------------------------------");
-				System.out.println("              Administer                     ");
+				System.out.println("              Student                     ");
 				System.out.println("Welcome : " + s.getfName() + s.getlName());
 				System.out.println("Your Roll No : " + s.getRoll());
 				System.out.println("User Id: " + s.getStudentUserId());
@@ -74,7 +92,7 @@ public class StudentMenu {
 		System.out.println("Enter Your Password ");
 		String pass = sc.next();
 
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		StudentDao stEtdao = new StudentDaoImpl();
 		try {
 
 			String res=stEtdao.studentAuthToDb(userId, pass);
@@ -85,7 +103,8 @@ public class StudentMenu {
 				message = true;
 			}
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			e.printStackTrace();
+			System.out.println("AccountNot found or UserId PassWord Invalid*");
+			
 		}
 		return message;
 
@@ -93,58 +112,49 @@ public class StudentMenu {
 
 	public void UpdatePassword(Scanner sc) {
 
-		System.out.println("Enter your Roll_Number");
-		int RollNo = sc.nextInt();
 		System.out.println("Enter your old Password");
 		String oldPass = sc.next();
 		System.out.println("Enter Your New  Password ");
 		String pass = sc.next();
 
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		StudentDao stEtdao = new StudentDaoImpl();
 
 		try {
+			String status = stEtdao.studentUpdatePassword( oldPass, pass);
 
-			String status = stEtdao.studentUpdatePassword(RollNo, oldPass, pass);
-
-			System.out.println("Mesage : " + status);
+			System.out.println("Mesage : " +status);
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("old Password Are Incorrect");
 		}
 
 	}
 
 	public void UpdateEmail(Scanner sc) {
 
-		System.out.println("Enter your rollNo");
-		int rollno = sc.nextInt();
 		System.out.println("Enter Your New email ");
 		String newEmail = sc.next();
-
-		StudentEntity et = new StudentEntity();
-		et.setRoll(rollno);
+		
+		Student et = new Student();
 		et.setEmail(newEmail);
 
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		StudentDao stEtdao = new StudentDaoImpl();
 		try {
-
 			String status = stEtdao.studentEmailUpdate(et);
 
 			System.out.println("updated email : " + status);
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error Occured");
 		}
 
 	}
 
 	public void viewAllStudentCourse() {
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		StudentDao stEtdao = new StudentDaoImpl();
 
 		try {
-			List<CourseEntity> res;
+			List<Course> res;
 			try {
 				res = stEtdao.viewAllCourses();
 				if (res != null) {
@@ -167,25 +177,29 @@ public class StudentMenu {
 		System.out.println("You you sure To delete Your Account-->(Y/N)");
 		choice = sc.next().toLowerCase();
 		if (choice.equals("y")) {
+			StudentDao stEtdao = new StudentDaoImpl();
 			System.out.println("Enter your RollNo To de_activate");
-
-			StudentEntityDao stEtdao = new StudentEntityDaoImpl();
 			try {
 				int userId = sc.nextInt();
-				String status = stEtdao.deleteAccout(userId);
+				if(userId==LoggedInUserId.studentloggedRollNo) {
+					String status = stEtdao.deleteAccout(userId);
 
-				System.out.println("Account Deleted : " + status);
-
+					System.out.println("Account Deleted : " + status);
+					Main.dashboardMenu();
+				}else {
+					System.out.println("Wrong Roll Number");
+					deleteStudentAccout(sc);
+				}
 			} catch (SomeThingWrongException | NoRecordFoundException e) {
-				e.printStackTrace();
+				System.out.println("Error Ocured");
 			}
 		} else {
 			Main.studentAactivity(sc);
 		}
-
 	}
 
 	public void Logout(Scanner sc) {
+		LoggedInUserId.studentloggedRollNo=0;
 		Main.dashboardMenu();
 
 	}
@@ -193,35 +207,32 @@ public class StudentMenu {
 	// wrong have to fixed
 	public void registerForCourses(Scanner sc) {
 		System.out.println("   Please Fill Requred Details     ");
-		System.out.println("Enter Student RollNo ");
-		int studentid = sc.nextInt();
 		System.out.println("Enter BatchId ");
 		int Batchid = sc.nextInt();
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		int StudentRoll=(int) LoggedInUserId.studentloggedRollNo;
+		AdminDao admEtdao = new AdminDaoImpl();
 		try {
-			stEtdao.registerCoursesInBatch(studentid, Batchid);
+			admEtdao.registerStudentBatch(StudentRoll, Batchid);
 			System.out.println("Batch With Course alloted succesfully");
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			e.printStackTrace();
+			System.out.println("Error Occured");
 		}
 	}
 
 	public void SeeEnrollCourses(Scanner sc) {
-		System.out.println("Please Fill Requred Details");
-		System.out.println("Enter Student rollNo ");
-
-		int StudentRollNo = sc.nextInt();
-		StudentEntityDao stEtdao = new StudentEntityDaoImpl();
+		
+		int StudentRollNo = (int) LoggedInUserId.studentloggedRollNo;
+		StudentDao stEtdao = new StudentDaoImpl();
 
 		try {
 
-			Set<CourseEntity> res = stEtdao.StudentEnrollCourses(StudentRollNo);
+			Set<Course> res = stEtdao.StudentEnrollCourses(StudentRollNo);
 			System.out.println("*******   Student Enrolled Courses  *********");
 			if(res==null) {
 				System.out.println("Student Not Erroled in any Course");
 			}else {
-				for(CourseEntity cc:res) {
+				for(Course cc:res) {
 					System.out.println("Course_Name :"+cc.getCorseName());
 				}
 			}

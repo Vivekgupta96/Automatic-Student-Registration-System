@@ -2,13 +2,13 @@ package com.Project.StudentRegistration;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import com.Project.Student.Main_User.Administrator;
+import com.Project.Student.Main_User.AdminMenu;
 import com.Project.Student.Main_User.StudentMenu;
 
 public class Main {
 	public static void studentAactivity(Scanner sc) {
 
-		System.out.println("------------------------------------------------------");
+		
 		System.out.println("              *********************                   ");
 		System.out.println("------------------------------------------------------");
 		System.out.println("Select -> 1 Update password ");
@@ -30,7 +30,8 @@ public class Main {
 		case 1:
 			stmenu.UpdatePassword(sc);
 			studentAactivity(sc);
-			break;
+	
+		break;
 		case 2:
 			stmenu.UpdateEmail(sc);
 			studentAactivity(sc);
@@ -90,7 +91,7 @@ public class Main {
 			case 1:
 				stmenu.enrollmentStudent(sc);
 				System.out.println("------------------------------------------------------");
-				System.out.println("******Student can Login Now**********");
+				System.out.println("Message : Student Can Login Now");
 				studentdashboard(sc);
 				break;
 
@@ -152,7 +153,7 @@ public class Main {
 		System.out.println("Chose any of the Option above");
 
 		administrationActivity = sc.nextInt();
-		Administrator admMenu = new Administrator();
+		AdminMenu admMenu = new AdminMenu();
 		switch (administrationActivity) {
 		case 1:
 			admMenu.AddNewCourse(sc);
@@ -234,7 +235,7 @@ public class Main {
 
 		try {
 
-			Administrator admMenu = new Administrator();
+			AdminMenu admMenu = new AdminMenu();
 			switch (adminChoice) {
 			case 1:
 				boolean autheticateResult = admMenu.adminLoginAuthrticate(sc);
