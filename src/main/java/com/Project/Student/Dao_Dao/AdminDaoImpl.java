@@ -22,19 +22,17 @@ public class AdminDaoImpl implements AdminDao {
 	public String adminAuthToDb(String userId, String pass) throws SomeThingWrongException, NoRecordFoundException {
 
 		String authadmin = null;
-		try {
-			if (userId.equals("admin") && pass.equals("admin")) {
-				authadmin = "Admin Autheticate Succesfully";
 
+			if (userId.equals("admin")) {
+				if( pass.equals("admin")){
+					authadmin = "Admin Autheticate Succesfully";
+				}else {
+					throw new SomeThingWrongException("Password Are Incorrect");
+				}
 			} else {
-				throw new SomeThingWrongException("userId or Password Are Incorrect");
+				throw new SomeThingWrongException("userId Are Incorrect");
 			}
-		} catch (PersistenceException px) {
-
-			throw new SomeThingWrongException("Unable to process request, try again later");
-		}
 		return authadmin;
-
 	}
 
 	@Override

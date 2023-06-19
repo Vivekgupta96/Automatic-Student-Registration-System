@@ -242,7 +242,6 @@ public class Main {
 				if (autheticateResult) {
 					administrationActivity(sc);
 				} else {
-					System.out.println("UserId or Password is Invalid");
 					admindashboard(sc);
 				}
 				break;

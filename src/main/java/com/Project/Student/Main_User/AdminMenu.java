@@ -36,7 +36,7 @@ public class AdminMenu {
 			message = true;
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			
+			System.out.println(e.getMessage());
 		}
 
 		return message;
