@@ -34,6 +34,10 @@ efficiently allocate the student in a batch.
 - Add Student To Batch
 - Add Courses To Batch
 
+  #  Admin login Credential
+  * userid =admin
+  * Password =admin
+
 ## Student Functionality
  - Enroll Student
  - Login Student
