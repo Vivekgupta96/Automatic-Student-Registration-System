@@ -164,10 +164,10 @@ public class StudentMenu {
 					System.out.println("No Course Found");
 				}
 			} catch (NoRecordFoundException e) {
-				e.printStackTrace();
+				System.out.println("error Found");
 			}
 		} catch (SomeThingWrongException e) {
-			e.printStackTrace();
+			System.out.println("error Found");
 		}
 	}
 
@@ -238,7 +238,7 @@ public class StudentMenu {
 			}
 
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 	}

@@ -8,7 +8,6 @@ import com.Project.Student.Main_User.StudentMenu;
 public class Main {
 	public static void studentAactivity(Scanner sc) {
 
-		
 		System.out.println("              *********************                   ");
 		System.out.println("------------------------------------------------------");
 		System.out.println("Select -> 1 Update password ");

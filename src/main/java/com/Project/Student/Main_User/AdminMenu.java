@@ -38,7 +38,6 @@ public class AdminMenu {
 		} catch (SomeThingWrongException | NoRecordFoundException e) {
 			System.out.println(e.getMessage());
 		}
-
 		return message;
 	}
 
@@ -89,46 +88,50 @@ public class AdminMenu {
 
 	public void updateCourseDetail(Scanner sc) {
 
-		System.out.println("Enter Course Id");
-		int courseId = sc.nextInt();
-		
-		System.out.println("Enter Updated course fee");
-		double cFee = sc.nextDouble();
-		
-		System.out.println("Enter updated course Duration");
-		int cduration = sc.nextInt();
-		
-		System.out.println("Enter updated course Intructor Name");
-		String cInstructer = sc.next();
-		
-		CourseDto cdto= new CourseDto();
-		cdto.setDuration(cduration);
-		cdto.setFee(cFee);
-		cdto.setInstructerName(cInstructer);
-		
-		AdminDao admEtdao = new AdminDaoImpl();
 		try {
-			Course res;
+			System.out.println("Enter Course Id");
+			int courseId = sc.nextInt();
+
+			System.out.println("Enter Updated course fee");
+			double cFee = sc.nextDouble();
+
+			System.out.println("Enter updated course Duration");
+			int cduration = sc.nextInt();
+
+			System.out.println("Enter updated course Intructor Name");
+			String cInstructer = sc.next();
+
+			CourseDto cdto = new CourseDto();
+			cdto.setDuration(cduration);
+			cdto.setFee(cFee);
+			cdto.setInstructerName(cInstructer);
+
+			AdminDao admEtdao = new AdminDaoImpl();
 			try {
-				res = admEtdao.admiCourseUpdate(cdto, courseId);
-				if (res != null) {
-					System.out.println("Course Update Succesfully");
-					System.out.println(res);
-				} else {
-					System.out.println("error Occured");
+				Course res;
+				try {
+					res = admEtdao.admiCourseUpdate(cdto, courseId);
+					if (res != null) {
+						System.out.println("Course Update Succesfully");
+						System.out.println(res);
+					} else {
+						System.out.println("error Occured");
+					}
+				} catch (NoRecordFoundException e) {
+
+					System.out.println(e.getMessage());
 				}
-			} catch (NoRecordFoundException e) {
 
-				e.printStackTrace();
+			} catch (SomeThingWrongException e) {
+
+				System.out.println(e.getMessage());
 			}
-
-		} catch (SomeThingWrongException e) {
-
-			e.printStackTrace();
+		} catch (InputMismatchException e) {
+			System.out.println("Invalid Input Entry!Please Select the from Given Input");
+			System.out.println("------------------------------------------------------");
+			updateCourseDetail(sc);
 		}
-
 	}
-
 	public void viewAllCourse() {
 
 		AdminDao admEtdao = new AdminDaoImpl();
@@ -143,18 +146,18 @@ public class AdminMenu {
 					System.out.println("No course Avalable");
 				}
 			} catch (NoRecordFoundException e) {
-
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 
 		} catch (SomeThingWrongException e) {
-
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 	}
 
 	public void deleteCourse(Scanner sc) {
+
+
 
 		System.out.println("Enter Course Id to Delete Course");
 		int courseId = sc.nextInt();
@@ -176,7 +179,7 @@ public class AdminMenu {
 			}
 
 		} catch (SomeThingWrongException e) {
-
+			System.out.println("Error Occured");
 		}
 
 	}
@@ -238,7 +241,7 @@ public class AdminMenu {
 				System.out.println("Error Occured !");
 			}
 		} catch (SomeThingWrongException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 	}
@@ -265,12 +268,12 @@ public class AdminMenu {
 				}
 			} catch (NoRecordFoundException e) {
 
-				e.printStackTrace();
+				System.out.println("error Occured");
 			}
 
 		} catch (SomeThingWrongException e) {
 
-			e.printStackTrace();
+			System.out.println("error Occured");
 		}
 	}
 
@@ -293,12 +296,12 @@ public class AdminMenu {
 				}
 			} catch (NoRecordFoundException e) {
 
-				e.printStackTrace();
+				System.out.println("Batch or Course Id is Invalid");
 			}
 
 		} catch (SomeThingWrongException e) {
 
-			e.printStackTrace();
+			System.out.println("error Occured");
 		}
 
 	}
@@ -331,7 +334,7 @@ public class AdminMenu {
 
 		} catch (SomeThingWrongException e) {
 
-			e.printStackTrace();
+			System.out.println("error Occured");
 		}
 
 	}
@@ -360,12 +363,12 @@ public class AdminMenu {
 				}
 			} catch (NoRecordFoundException e) {
 
-				e.printStackTrace();
+				System.out.println("error Occured");
 			}
 
 		} catch (SomeThingWrongException e) {
 
-			e.printStackTrace();
+			System.out.println("error Occured");
 		}
 
 		
@@ -385,7 +388,7 @@ public class AdminMenu {
 			
 		} catch (Exception e) {
 
-			e.printStackTrace();
+			System.out.println("Invalid Student or Batch Id");
 		}
 
 		
